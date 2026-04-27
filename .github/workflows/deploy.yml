@@ -116,10 +116,13 @@ jobs:
           ssh -i "${HOME}/.ssh/id_ed25519" -p "${DEPLOY_PORT}" "${DEPLOY_SSH_USER}@${DEPLOY_HOST}" \
             "DEPLOY_TARGET_DIR='${DEPLOY_TARGET_DIR}' ARCHIVE_NAME='${ARCHIVE_NAME}' bash -se" <<'EOF'
           set -euo pipefail
+          umask 022
 
           mkdir -p "${DEPLOY_TARGET_DIR}"
 
           find "${DEPLOY_TARGET_DIR}" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
           tar -xzf "/tmp/${ARCHIVE_NAME}" -C "${DEPLOY_TARGET_DIR}" --strip-components=1
+          find "${DEPLOY_TARGET_DIR}" -type d -exec chmod 755 {} +
+          find "${DEPLOY_TARGET_DIR}" -type f -exec chmod 644 {} +
           rm -f "/tmp/${ARCHIVE_NAME}"
           EOF
