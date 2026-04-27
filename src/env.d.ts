@@ -4,6 +4,7 @@ interface ImportMetaEnv extends Readonly<Record<string, string>> {
   readonly MODE: string;
   readonly PROD: boolean;
   readonly DEV: boolean;
+  readonly VITE_DEV_PROXY_TARGET?: string;
 }
 
 interface ImportMeta {

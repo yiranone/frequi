@@ -62,28 +62,31 @@ function stopEditBot(botId: string) {
 </script>
 
 <template>
-  <div v-if="botStore.botCount > 0" class="w-full mx-2">
-    <h3 v-if="!small" class="font-bold text-2xl mb-2">Available bots</h3>
-    <ul
-      ref="sortContainer"
-      class="flex flex-col divide-y border-x border-surface-500 rounded-sm border-y divide-solid divide-surface-500"
-    >
+  <div v-if="botStore.botCount > 0" class="w-full">
+    <div v-if="!small" class="mb-4 flex items-center justify-between text-left">
+      <div>
+        <h3 class="ft-heading text-2xl font-semibold">Available bots</h3>
+        <p class="ft-muted mt-1 text-sm">Select, reorder and refresh credentials from one list.</p>
+      </div>
+    </div>
+    <ul ref="sortContainer" class="flex flex-col gap-3">
       <li
         v-for="bot in botListComp"
         :key="bot.botId"
         :active="bot.botId === botStore.selectedBot"
-        button
         :title="`${bot.botId} - ${bot.botName} - ${bot.botUrl} - ${
           botStore.botStores[bot.botId]?.isBotLoggedIn ? '' : 'Login info expired!'
         }`"
-        class="flex items-center p-2"
+        class="ft-panel-card flex items-center rounded-[24px] p-3 transition hover:-translate-y-0.5 hover:shadow-2xl"
         :class="{
-          'bg-primary-100 dark:bg-primary-800 underline font-semibold':
-            bot.botId === botStore.selectedBot,
+          'ring-2 ring-cyan-400/30': bot.botId === botStore.selectedBot,
         }"
         @click="botStore.selectBot(bot.botId)"
       >
-        <i-mdi-reorder-horizontal v-if="!small" class="handle cursor-pointer me-2 fs-4" />
+        <i-mdi-reorder-horizontal
+          v-if="!small"
+          class="handle me-3 cursor-pointer text-xl text-slate-400 dark:text-slate-500"
+        />
         <BotRename
           v-if="editingBots.includes(bot.botId)"
           :bot="bot"
@@ -100,6 +103,6 @@ function stopEditBot(botId: string) {
         />
       </li>
     </ul>
-    <LoginModal v-if="!small" ref="loginModal" class="mt-2" login-text="Add new bot" />
+    <LoginModal v-if="!small" ref="loginModal" class="mt-4" login-text="Add new bot" />
   </div>
 </template>

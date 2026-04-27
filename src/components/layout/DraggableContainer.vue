@@ -13,17 +13,15 @@ withDefaults(
 </script>
 
 <template>
-  <div
-    class="flex flex-col h-full w-full border dark:border-surface-800 border-surface-200 rounded-sm"
-  >
+  <div class="ft-panel-card flex h-full w-full flex-col overflow-hidden rounded-[22px]">
     <div
-      class="drag-header py-1 px-2 dark:bg-surface-800 bg-surface-100 border-b border-surface-300 dark:border-surface-700"
+      class="drag-header border-b border-white/10 bg-white/35 px-4 py-3 text-left text-sm font-semibold dark:bg-slate-950/35"
     >
       <slot name="header">
         {{ header }}
       </slot>
     </div>
-    <div class="p-0 h-full w-full overflow-auto" v-bind="$attrs">
+    <div class="h-full w-full overflow-auto p-0" v-bind="$attrs">
       <slot></slot>
     </div>
   </div>

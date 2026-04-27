@@ -40,10 +40,15 @@ const autoRefreshLoc = computed({
 
 <template>
   <div v-if="bot" class="flex items-center justify-between w-full">
-    <span class="me-2">{{ bot.botName || bot.botId }}</span>
+    <div class="me-3 min-w-0 text-left">
+      <div class="truncate font-medium">{{ bot.botName || bot.botId }}</div>
+      <div class="ft-muted truncate text-xs">{{ bot.botUrl }}</div>
+    </div>
 
     <div class="flex items-center gap-2">
-      <div class="flex items-center">
+      <div
+        class="flex items-center rounded-full border border-white/10 bg-white/35 px-2 py-1 dark:bg-slate-950/25"
+      >
         <ToggleSwitch v-model="autoRefreshLoc" class="mr-2" />
         <div
           v-if="selectedBotStore.isBotLoggedIn"
@@ -64,6 +69,8 @@ const autoRefreshLoc = computed({
           v-if="selectedBotStore.isBotLoggedIn"
           size="small"
           severity="secondary"
+          variant="outlined"
+          class="rounded-full"
           title="Edit bot"
           @click="$emit('edit')"
         >
@@ -73,12 +80,21 @@ const autoRefreshLoc = computed({
           v-else
           size="small"
           severity="secondary"
+          variant="outlined"
+          class="rounded-full"
           title="Login again"
           @click="$emit('editLogin')"
         >
           <i-mdi-login />
         </Button>
-        <Button size="small" severity="secondary" title="Delete bot" @click="removeBotQuestion">
+        <Button
+          size="small"
+          severity="secondary"
+          variant="outlined"
+          class="rounded-full"
+          title="Delete bot"
+          @click="removeBotQuestion"
+        >
           <i-mdi-delete />
         </Button>
       </div>

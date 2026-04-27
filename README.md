@@ -27,11 +27,13 @@ You'll need to correctly configure [CORS](https://www.freqtrade.io/en/stable/res
 
 ## Developer project setup
 
-It will require [freqtrade](https://github.com/freqtrade/freqtrade) to be running on the same host with the API enabled under (`localhost:8080`). You can either use the webpack proxy (port can be changed in `vue.config.js`) - or connect directly to the API (recommended).
+The Vite dev server runs on `http://127.0.0.1:3000` and proxies `/api` requests to the bot API.
+This repo currently defaults that proxy target to `https://trade.xunlian.co`, and you can override it
+for another bot with `VITE_DEV_PROXY_TARGET`.
 
-You will also have to have CORS for freqtrade configured correctly based on the [freqtrade documentation](https://www.freqtrade.io/en/stable/rest-api/#cors).
-Most likely, the correct entry will be `http://localhost:3000` or `http://127.0.0.1:3000` - but the URL must match the URL you use to access FreqUI.
-Ports can vary, so check the URL you're using.
+If you connect directly to a remote bot URL from the browser instead of using the Vite proxy, then
+Freqtrade must allow the exact UI origin in its [CORS configuration](https://www.freqtrade.io/en/stable/rest-api/#cors).
+Typical local origins are `http://localhost:3000` or `http://127.0.0.1:3000`.
 
 ### Project setup
 
@@ -44,6 +46,14 @@ pnpm install
 ```
 pnpm run dev
 ```
+
+To test a remote bot in local development without changing its CORS allowlist, run:
+
+```
+VITE_DEV_PROXY_TARGET=https://trade.example.com pnpm run dev
+```
+
+Then use `http://127.0.0.1:3000` as the API URL inside the login form so requests stay same-origin.
 
 ### Compiles and minifies for production
 

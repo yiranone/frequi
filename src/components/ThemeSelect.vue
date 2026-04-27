@@ -45,7 +45,7 @@ function toggleNight() {
   <Button
     variant="link"
     title="Toggle Night Mode"
-    class="text-surface-200"
+    class="rounded-full border border-white/10 px-3 text-current hover:bg-white/10"
     :label="showText ? 'Toggle Night Mode' : ''"
     @click="toggleNight"
   >

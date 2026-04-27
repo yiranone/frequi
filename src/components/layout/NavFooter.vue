@@ -3,17 +3,15 @@ const botStore = useBotStore();
 </script>
 
 <template>
-  <footer class="md:hidden">
-    <!-- Only visible on xs (phone) viewport! -->
-    <hr class="my-0" />
-    <div class="flex gap-2 justify-between px-2">
+  <footer class="sticky bottom-0 z-30 mt-4 md:hidden">
+    <div class="ft-panel-card mx-auto flex max-w-3xl justify-between rounded-[24px] px-2 py-2">
       <Button
         v-if="!botStore.canRunBacktest"
         icon-pos="top"
         variant="link"
         size="small"
         as="router-link"
-        class="align-items-center"
+        class="align-items-center min-w-0 flex-1 rounded-2xl text-current"
         to="/open_trades"
         label="Trades"
       >
@@ -27,7 +25,7 @@ const botStore = useBotStore();
         variant="link"
         size="small"
         as="router-link"
-        class="align-items-center"
+        class="align-items-center min-w-0 flex-1 rounded-2xl text-current"
         to="/trade_history"
         label="History"
       >
@@ -41,7 +39,7 @@ const botStore = useBotStore();
         variant="link"
         size="small"
         as="router-link"
-        class="align-items-center"
+        class="align-items-center min-w-0 flex-1 rounded-2xl text-current"
         to="/pairlist"
         label="Pairlist"
       >
@@ -55,7 +53,7 @@ const botStore = useBotStore();
         variant="link"
         size="small"
         as="router-link"
-        class="align-items-center"
+        class="align-items-center min-w-0 flex-1 rounded-2xl text-current"
         to="/balance"
         label="Balance"
       >
@@ -69,7 +67,7 @@ const botStore = useBotStore();
         variant="link"
         size="small"
         as="router-link"
-        class="align-items-center"
+        class="align-items-center min-w-0 flex-1 rounded-2xl text-current"
         to="/dashboard"
         label="Dashboard"
       >

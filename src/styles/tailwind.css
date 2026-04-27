@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
 @import 'tailwindcss';
 
 @plugin 'tailwindcss-primeui';
@@ -22,120 +24,257 @@
   }
 }
 
-
-
-
 @layer frequi {
-  /* Customization for freqUI components */
   :root {
+    --ft-font-body: 'IBM Plex Sans', 'Inter', 'Segoe UI', sans-serif;
+    --ft-font-heading: 'Space Grotesk', 'Avenir Next', 'Segoe UI', sans-serif;
+    --ft-bg-start: #f6fbff;
+    --ft-bg-middle: #eef6ff;
+    --ft-bg-end: #f8f5ea;
+    --ft-text-strong: #09111f;
+    --ft-text-muted: #526074;
+    --ft-panel-bg: rgba(255, 255, 255, 0.76);
+    --ft-panel-border: rgba(15, 23, 42, 0.08);
+    --ft-panel-shadow: 0 30px 90px rgba(15, 23, 42, 0.12);
+    --ft-orb-primary: rgba(14, 165, 233, 0.22);
+    --ft-orb-secondary: rgba(45, 212, 191, 0.18);
+    --ft-orb-tertiary: rgba(251, 191, 36, 0.14);
+    --ft-grid-color: rgba(15, 23, 42, 0.06);
 
-    --p-primary-50: #DBFAFF;
-    --p-primary-100: #B8F4FF;
-    --p-primary-200: #75EAFF;
-    --p-primary-300: #2EE0FF;
-    --p-primary-400: #00C3E6;
-    --p-primary-500: #0089A1;
-    --p-primary-600: #006C80;
+    --p-primary-50: #dbfaff;
+    --p-primary-100: #b8f4ff;
+    --p-primary-200: #75eaff;
+    --p-primary-300: #2ee0ff;
+    --p-primary-400: #00c3e6;
+    --p-primary-500: #0089a1;
+    --p-primary-600: #006c80;
     --p-primary-700: #005261;
     --p-primary-800: #003842;
-    --p-primary-900: #001A1F;
-    --p-primary-950: #000D0F;
-
+    --p-primary-900: #001a1f;
+    --p-primary-950: #000d0f;
     --p-primary-color: var(--p-primary-600);
 
-    /* Reduce size of listboxes*/
     --p-listbox-option-padding: 0.15rem 0.75rem;
-
-    /* Secondary Button */
     --p-button-secondary-background: var(--p-surface-200);
     --p-button-secondary-hover-background: var(--p-surface-300);
-
-    /* default profit loss colors, could be overwritten by custom style */
     --color-profit: #12bb7b;
     --color-loss: #ef5350;
-
     --p-tabs-tabpanel-padding: unset;
-
     --p-togglebutton-content-checked-background: var(--p-primary-500);
     --p-togglebutton-sm-padding: 0;
-
-
     --p-selectbutton-border-radius: var(--radius-sm);
-    --p-togglebutton-content-border-radius: 0px;
-    /* --p-button-link-color: var(--p-surface-200); */
-    /* --p-togglebutton-content-border-radius: var(--radius-sm); */
-    /* --p-button-sm-padding-y: 0.1rem;
-    --p-button-sm-padding-x: 0.4rem; */
-
-    /* --p-datatable-row-selected-background: var(--p-highlight-background); */
-    /* --p-datatable-row-selected-color: var(--p-primary-contrast); */
-
-      /* --p-primary-color: var(--p-primary-500); */
+    --p-togglebutton-content-border-radius: 0;
   }
 
   .ft-dark-theme {
-      --p-content-background: var(--p-surface-950);
-      --p-menu-background: var(--p-surface-900);
+    --ft-bg-start: #020814;
+    --ft-bg-middle: #071221;
+    --ft-bg-end: #0d1a24;
+    --ft-text-strong: #ecf6ff;
+    --ft-text-muted: #8ea0b7;
+    --ft-panel-bg: rgba(2, 8, 20, 0.72);
+    --ft-panel-border: rgba(125, 211, 252, 0.14);
+    --ft-panel-shadow: 0 35px 120px rgba(2, 8, 20, 0.52);
+    --ft-orb-primary: rgba(14, 165, 233, 0.28);
+    --ft-orb-secondary: rgba(45, 212, 191, 0.22);
+    --ft-orb-tertiary: rgba(251, 191, 36, 0.16);
+    --ft-grid-color: rgba(148, 163, 184, 0.08);
 
-      --p-primary-contrast-color: var(--p-text-200);
-      --p-button-secondary-background: var(--p-surface-700);
-      --p-button-secondary-hover-background: var(--p-surface-600);
+    --p-content-background: var(--p-surface-950);
+    --p-menu-background: var(--p-surface-900);
+    --p-primary-contrast-color: var(--p-text-200);
+    --p-button-secondary-background: var(--p-surface-700);
+    --p-button-secondary-hover-background: var(--p-surface-600);
   }
 
   .p-button-icon-only.p-button-sm {
     --p-button-sm-icon-only-height: 2.25rem;
-    /* height: var(--p-button-sm-icon-only-width); */
-    padding : 0.1rem 0.4rem 0.1rem 0.4rem;
-    /* padding: unset; */
+    padding: 0.1rem 0.4rem;
   }
+
   .p-button-icon-only {
-    /* padding : 0.1rem 0.4rem 0.1rem 0.4rem; */
     padding: unset;
     aspect-ratio: 1 / 1;
   }
 
   .p-selectbutton {
-    border-color: var(--p-primary-500);
     border: 1px solid var(--p-primary-500);
-    &>.p-togglebutton {
-      border: none;
+    border-color: var(--p-primary-500);
 
+    & > .p-togglebutton {
+      border: none;
     }
   }
-
 }
-
 
 @layer primevue {
-    /* Base component style overrides */
-    :root {
-
-        --p-datatable-row-background: unset;
-    }
+  :root {
+    --p-datatable-row-background: unset;
+  }
 }
 
+html,
+body,
+#app {
+  min-height: 100%;
+}
 
+body {
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at top left, var(--ft-orb-primary), transparent 32%),
+    radial-gradient(circle at 78% 14%, var(--ft-orb-secondary), transparent 28%),
+    linear-gradient(160deg, var(--ft-bg-start), var(--ft-bg-middle) 52%, var(--ft-bg-end));
+  color: var(--ft-text-strong);
+  font-family: var(--ft-font-body);
+}
+
+a {
+  transition:
+    color 180ms ease,
+    opacity 180ms ease;
+}
+
+.ft-app-shell {
+  position: relative;
+  color: var(--ft-text-strong);
+}
+
+.ft-shell-pattern {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--ft-grid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--ft-grid-color) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(circle at center, black, transparent 84%);
+  opacity: 0.55;
+}
+
+.ft-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(14px);
+}
+
+.ft-orb-primary {
+  top: 6rem;
+  left: -5rem;
+  height: 18rem;
+  width: 18rem;
+  background: var(--ft-orb-primary);
+}
+
+.ft-orb-secondary {
+  top: 18rem;
+  right: -4rem;
+  height: 16rem;
+  width: 16rem;
+  background: var(--ft-orb-secondary);
+}
+
+.ft-orb-tertiary {
+  bottom: 8rem;
+  left: 28%;
+  height: 12rem;
+  width: 12rem;
+  background: var(--ft-orb-tertiary);
+}
+
+.ft-panel-card {
+  border: 1px solid var(--ft-panel-border);
+  background: var(--ft-panel-bg);
+  box-shadow: var(--ft-panel-shadow);
+  backdrop-filter: blur(22px);
+}
+
+.ft-heading {
+  font-family: var(--ft-font-heading);
+  letter-spacing: -0.03em;
+}
+
+.ft-gradient-text {
+  background: linear-gradient(135deg, #1d4ed8, #0891b2 45%, #14b8a6 78%, #f59e0b);
+  background-clip: text;
+  color: transparent;
+}
+
+.ft-muted {
+  color: var(--ft-text-muted);
+}
+
+.ft-section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid rgba(125, 211, 252, 0.18);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.34);
+  padding: 0.45rem 0.8rem;
+  color: #0369a1;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ft-dark-theme .ft-section-kicker {
+  background: rgba(12, 20, 36, 0.55);
+  color: #7dd3fc;
+}
+
+.ft-card-highlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.ft-card-highlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(125, 211, 252, 0.14),
+    transparent 45%,
+    rgba(251, 191, 36, 0.12)
+  );
+  pointer-events: none;
+}
+
+.ft-input-shell {
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.ft-dark-theme .ft-input-shell {
+  border-color: rgba(125, 211, 252, 0.14);
+  background: rgba(15, 23, 42, 0.58);
+}
+
+.ft-dark-theme .p-inputtext,
+.ft-dark-theme .p-password-input,
+.ft-dark-theme .p-select-label,
+.ft-dark-theme .p-drawer,
+.ft-dark-theme .p-dialog {
+  color: var(--ft-text-strong);
+}
 
 body.ft-theme-transition,
 body.ft-theme-transition *,
 body.ft-theme-transition *:before,
 body.ft-theme-transition *:after {
-    transition:
-        background 750ms ease-in-out,
-        border-color 750ms ease-in-out,
-        background-color 750ms ease-in-out,
-    ;
-    transition-delay: 0 !important;
+  transition:
+    background 750ms ease-in-out,
+    border-color 750ms ease-in-out,
+    background-color 750ms ease-in-out;
+  transition-delay: 0 !important;
 }
 
-
 html {
-    /*  Set the default font size to 14px */
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .vue-grid-item {
-    /*  Fix white corners in vue-grid-item. */
-    background-color: unset !important;
+  background-color: unset !important;
 }
-
