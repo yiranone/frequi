@@ -16,12 +16,6 @@ watch(
 
 <template>
   <div id="app" class="ft-app-shell flex min-h-dvh flex-col" :style="colorStore.cssVars">
-    <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-      <div class="ft-shell-pattern" />
-      <div class="ft-orb ft-orb-primary" />
-      <div class="ft-orb ft-orb-secondary" />
-      <div class="ft-orb ft-orb-tertiary" />
-    </div>
     <NavBar />
     <Toast />
     <BodyLayout class="grow overflow-auto" />

@@ -20,7 +20,7 @@ withDefaults(
       {{ backtestResult.metadata.strategyName }} - {{ backtestResult.strategy.timeframe }}
     </div>
     <div class="text-sm">
-      TradeCount: {{ backtestResult.strategy.total_trades }} - Profit:
+      交易数：{{ backtestResult.strategy.total_trades }} - 收益：
       {{ formatPercent(backtestResult.strategy.profit_total) }}
     </div>
     <div v-if="canUseModify" class="text-sm" style="white-space: pre-wrap">

@@ -16,8 +16,8 @@ onMounted(() => {
 
 function deleteBacktestResult(result: BacktestHistoryEntry) {
   const msg: MsgBoxObject = {
-    title: 'Delete result',
-    message: `Delete result ${result.filename} from disk?`,
+    title: '删除结果',
+    message: `确认从磁盘删除结果 ${result.filename} 吗？`,
     accept: () => {
       botStore.activeBot.deleteBacktestHistoryResult(result);
     },
@@ -41,26 +41,23 @@ function rowClick(row) {
   <div>
     <Button
       class="float-end"
-      title="Refresh"
-      aria-label="Refresh"
+      title="刷新"
+      aria-label="刷新"
       variant="outlined"
       severity="secondary"
       @click="botStore.activeBot.getBacktestHistory"
     >
       <i-mdi-refresh />
     </Button>
-    <p>
-      Load Historic results from disk. You can click on multiple results to load all of them into
-      freqUI.
-    </p>
+    <p>从磁盘载入历史回测结果。你可以连续点击多个结果，将它们一起载入寻链量化界面。</p>
     <div v-if="botStore.activeBot.backtestHistoryList.length > 0" class="flex align-center">
       <InputText
         id="trade-filter"
         v-model="filterText"
         type="text"
         size="small"
-        placeholder="Filter results"
-        title="Filter results"
+        placeholder="筛选结果"
+        title="筛选结果"
       />
     </div>
     <DataTable
@@ -75,8 +72,8 @@ function rowClick(row) {
       :value="filteredList"
       @row-click="rowClick"
     >
-      <Column field="strategy" header="Strategy2"></Column>
-      <Column field="timeframe" header="Details">
+      <Column field="strategy" header="策略"></Column>
+      <Column field="timeframe" header="详情">
         <template #body="{ data }">
           <strong>{{ data.timeframe }}</strong>
           <span v-if="data.backtest_start_ts && data.backtest_end_ts" class="ms-1">
@@ -86,13 +83,13 @@ function rowClick(row) {
           >
         </template>
       </Column>
-      <Column field="backtest_start_time" header="Backtest Time">
+      <Column field="backtest_start_time" header="回测时间">
         <template #body="{ data }">
           <DateTimeTZ :date="data.backtest_start_time * 1000" />
         </template>
       </Column>
-      <Column field="filename" header="Filename"></Column>
-      <Column field="actions" header="Actions">
+      <Column field="filename" header="文件名"></Column>
+      <Column field="actions" header="操作">
         <template #body="{ data }">
           <div class="flex items-center">
             <InfoBox
@@ -104,7 +101,7 @@ function rowClick(row) {
               v-if="botStore.activeBot.botFeatures.backtestDelete"
               class="ms-1"
               size="small"
-              title="Load this Result."
+              title="载入这个结果"
               :disabled="data.run_id in botStore.activeBot.backtestHistory"
               @click.stop="botStore.activeBot.getBacktestHistoryResult(data)"
             >
@@ -117,7 +114,7 @@ function rowClick(row) {
               class="ms-1"
               size="small"
               severity="secondary"
-              title="Delete this Result."
+              title="删除这个结果"
               :disabled="data.run_id in botStore.activeBot.backtestHistory"
               @click.stop="deleteBacktestResult(data)"
             >

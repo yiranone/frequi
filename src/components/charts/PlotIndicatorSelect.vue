@@ -55,7 +55,7 @@ watch(
       >
       </Select>
     </div>
-    <Button size="small" title="Abort" class="ms-1 mt-auto" severity="secondary" @click="abort">
+    <Button size="small" title="取消" class="ms-1 mt-auto" severity="secondary" @click="abort">
       <template #icon>
         <i-mdi-close />
       </template>

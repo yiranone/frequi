@@ -106,7 +106,7 @@ onMounted(async () => {
         :min-h="4"
         drag-allow-from=".drag-header"
       >
-        <DraggableContainer :header="`Profit over time ${botStore.botCount > 1 ? 'combined' : ''}`">
+        <DraggableContainer :header="`收益时间走势${botStore.botCount > 1 ? '（合并）' : ''}`">
           <PeriodBreakdown multi-bot-view />
         </DraggableContainer>
       </GridItem>
@@ -121,7 +121,7 @@ onMounted(async () => {
         :min-h="4"
         drag-allow-from=".drag-header"
       >
-        <DraggableContainer header="Bot comparison">
+        <DraggableContainer header="机器人对比">
           <BotComparisonList />
         </DraggableContainer>
       </GridItem>
@@ -139,10 +139,10 @@ onMounted(async () => {
         <DraggableContainer>
           <template #header>
             <div class="flex justify-content-center">
-              Open Trades
+              当前持仓
               <InfoBox
                 class="ms-2"
-                hint="Open trades of all selected bots. Click on a trade to go to the trade page for that trade/bot."
+                hint="展示所有已选机器人的当前持仓。点击某一条交易可跳转到对应机器人和交易详情页。"
               />
             </div>
           </template>
@@ -160,7 +160,7 @@ onMounted(async () => {
         :min-h="4"
         drag-allow-from=".drag-header"
       >
-        <DraggableContainer header="Cumulative Profit">
+        <DraggableContainer header="累计收益">
           <CumProfitChart
             :trades="botStore.allTradesSelectedBots"
             :open-trades="botStore.allOpenTradesSelectedBots"
@@ -179,7 +179,7 @@ onMounted(async () => {
         :min-h="4"
         drag-allow-from=".drag-header"
       >
-        <DraggableContainer header="Wallet History">
+        <DraggableContainer header="资产历史">
           <WalletHistoryChart :wallet-data="botStore.allBalanceHistory" :show-title="false" />
         </DraggableContainer>
       </GridItem>
@@ -197,10 +197,10 @@ onMounted(async () => {
         <DraggableContainer>
           <template #header>
             <div class="flex justify-content-center">
-              Closed Trades
+              历史成交
               <InfoBox
                 class="ms-2"
-                hint="Closed trades for all selected bots. Click on a trade to go to the trade page for that trade/bot."
+                hint="展示所有已选机器人的已平仓交易。点击某一条交易可跳转到对应机器人和交易详情页。"
               />
             </div>
           </template>
@@ -223,7 +223,7 @@ onMounted(async () => {
         :min-h="4"
         drag-allow-from=".drag-header"
       >
-        <DraggableContainer header="Profit Distribution">
+        <DraggableContainer header="收益分布">
           <ProfitDistributionChart :trades="botStore.allTradesSelectedBots" :show-title="false" />
         </DraggableContainer>
       </GridItem>
@@ -238,7 +238,7 @@ onMounted(async () => {
         :min-h="4"
         drag-allow-from=".drag-header"
       >
-        <DraggableContainer header="Trades Log">
+        <DraggableContainer header="交易日志">
           <TradesLogChart :trades="botStore.allTradesSelectedBots" :show-title="false" />
         </DraggableContainer>
       </GridItem>

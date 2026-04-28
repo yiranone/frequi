@@ -5,6 +5,19 @@ const exchangeModel = defineModel<ExchangeSelection>({ required: true });
 
 const botStore = useBotStore();
 
+function formatTradingModeLabel(mode: string): string {
+  if (mode === 'spot') return '现货';
+  if (mode === 'margin') return '保证金';
+  if (mode === 'futures') return '合约';
+  return mode;
+}
+
+function formatMarginModeLabel(mode: string): string {
+  if (mode === '') return '无';
+  if (mode === 'isolated') return '逐仓';
+  return mode;
+}
+
 const exchangeList = computed(() => {
   const supported = botStore.activeBot.exchangeList
     .filter((ex) => ex.valid && ex.supported)
@@ -16,11 +29,11 @@ const exchangeList = computed(() => {
 
   return [
     {
-      label: 'Supported',
+      label: '支持',
       options: supported.map((e) => ({ value: e.classname ?? e.name, text: e.name })),
     },
     {
-      label: 'Unsupported',
+      label: '不支持',
       options: unsupported.map((e) => ({ value: e.classname ?? e.name, text: e.name })),
     },
   ];
@@ -37,7 +50,7 @@ const tradeModesTyped = computed(() => {
 const tradeModes = computed(() => {
   return tradeModesTyped.value.map((tm) => {
     return {
-      text: `${tm.margin_mode} ${tm.trading_mode}`,
+      text: `${formatMarginModeLabel(tm.margin_mode)} ${formatTradingModeLabel(tm.trading_mode)}`,
       value: tm,
     };
   });

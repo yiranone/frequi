@@ -147,7 +147,7 @@ async function handleSubmit() {
     if (axios.isAxiosError(error) && error.response && error.response.status === 401) {
       nameState.value = false;
       pwdState.value = false;
-      errorMessage.value = 'Connected to bot, however Login failed, Username or Password wrong.';
+      errorMessage.value = '已连接到机器人，但登录失败。请检查用户名或密码是否正确。';
     } else if (
       axios.isAxiosError(error) &&
       !error.response &&
@@ -156,19 +156,19 @@ async function handleSubmit() {
       urlState.value = false;
       errorMessageCORS.value = true;
       if (import.meta.env.DEV) {
-        errorMessage.value = `Login failed.
-The bot API is reachable, but the browser likely blocked this cross-origin request from ${currentOrigin}.
-Either add ${currentOrigin} to Freqtrade CORS, or run local development through the Vite proxy and use ${currentOrigin} as the API URL.`;
+        errorMessage.value = `登录失败。
+机器人 API 可以访问，但浏览器很可能拦截了来自 ${currentOrigin} 的跨域请求。
+你可以把 ${currentOrigin} 加入 Freqtrade 的 CORS 白名单，或者通过 Vite 代理进行本地联调，并把 ${currentOrigin} 作为 API 地址。`;
       } else {
-        errorMessage.value = `Login failed.
-The bot API is reachable, but the browser likely blocked this cross-origin request from ${currentOrigin}.
-Please add ${currentOrigin} to the bot's CORS allowlist and retry.`;
+        errorMessage.value = `登录失败。
+机器人 API 可以访问，但浏览器很可能拦截了来自 ${currentOrigin} 的跨域请求。
+请把 ${currentOrigin} 加入机器人的 CORS 允许列表后重试。`;
       }
     } else {
       urlState.value = false;
-      errorMessage.value = `Login failed.
-Please verify that the bot is running, the Bot API is enabled and the URL is reachable.
-You can verify this by navigating to ${auth.value.url}/api/v1/ping to make sure the bot API is reachable`;
+      errorMessage.value = `登录失败。
+请确认机器人已启动、Bot API 已启用，并且当前 URL 可以访问。
+你可以访问 ${auth.value.url}/api/v1/ping 来检查机器人 API 是否可达。`;
       if (normalizedAuthUrl.value !== currentOrigin) {
         errorMessageCORS.value = true;
       }
@@ -209,12 +209,12 @@ onMounted(() => {
       <div class="ft-input-shell p-4">
         <label for="name-input" class="mb-2 flex items-center gap-2 text-sm font-medium">
           <i-mdi-tag-outline class="text-primary" />
-          Bot Name
+          机器人名称
         </label>
         <InputText
           id="name-input"
           v-model="auth.botName"
-          placeholder="Research Bot"
+          placeholder="例如：主交易机器人"
           class="w-full"
           @keydown.enter="handleOk"
         />
@@ -223,7 +223,7 @@ onMounted(() => {
       <div class="ft-input-shell p-4">
         <label for="url-input" class="mb-2 flex items-center gap-2 text-sm font-medium">
           <i-mdi-web class="text-primary" />
-          API URL
+          API 地址
         </label>
         <InputText
           id="url-input"
@@ -236,24 +236,24 @@ onMounted(() => {
           @keydown.enter="handleOk"
         />
         <div class="ft-muted mt-2 text-xs leading-5">
-          Reachability check: <span class="font-medium">{{ pingUrl }}</span>
+          可达性检查：<span class="font-medium">{{ pingUrl }}</span>
         </div>
         <div v-if="devProxyHint" class="ft-muted mt-2 text-xs leading-5">
-          Dev proxy:
+          开发代理：
           <span class="font-medium">{{ devProxyHint }}</span>
         </div>
         <span v-if="urlState === false" class="mt-2 block text-sm text-red-500">
-          API URL required
+          请输入 API 地址
         </span>
         <Message v-if="urlDuplicate" class="mt-3 text-sm" severity="warn">
-          This URL is already in use by another bot.
+          这个地址已经被其他机器人使用。
         </Message>
         <Message v-if="shouldUseDevProxy" class="mt-3 text-sm" severity="info">
-          Local development will proxy this bot through
+          本地开发会通过
           <span class="font-medium">{{ currentOrigin }}</span>
-          to avoid CORS. You can also enter
+          代理这个机器人来避开 CORS。你也可以直接把
           <span class="font-medium">{{ currentOrigin }}</span>
-          directly as the API URL.
+          填成 API 地址。
         </Message>
       </div>
 
@@ -261,7 +261,7 @@ onMounted(() => {
         <div class="ft-input-shell p-4">
           <label for="username-input" class="mb-2 flex items-center gap-2 text-sm font-medium">
             <i-mdi-account-outline class="text-primary" />
-            Username
+            用户名
           </label>
           <InputText
             id="username-input"
@@ -273,14 +273,14 @@ onMounted(() => {
             @keydown.enter="handleOk"
           />
           <span v-if="nameState === false" class="mt-2 block text-sm text-red-500">
-            Name and password are required.
+            请输入用户名和密码。
           </span>
         </div>
 
         <div class="ft-input-shell p-4">
           <label for="password-input" class="mb-2 flex items-center gap-2 text-sm font-medium">
             <i-mdi-lock-outline class="text-primary" />
-            Password
+            密码
           </label>
           <InputText
             id="password-input"
@@ -292,7 +292,7 @@ onMounted(() => {
             @keydown.enter="handleOk"
           />
           <span v-if="pwdState === false" class="mt-2 block text-sm text-red-500">
-            Invalid password
+            请输入有效密码
           </span>
         </div>
       </div>
@@ -301,34 +301,28 @@ onMounted(() => {
         {{ errorMessage }}
         <br />
         <span v-if="errorMessageCORS">
-          Please also check your bot's CORS configuration:
+          另外请检查机器人侧的 CORS 配置：
           <a
             href="https://www.freqtrade.io/en/latest/rest-api/#cors"
             class="text-blue-500 underline"
           >
-            Freqtrade CORS documentation
+            Freqtrade CORS 文档
           </a>
         </span>
       </Message>
     </div>
 
     <div class="mt-6 flex flex-wrap justify-end gap-2">
-      <Button
-        label="Reset"
-        severity="danger"
-        type="reset"
-        variant="outlined"
-        class="rounded-full"
-      />
+      <Button label="重置" severity="danger" type="reset" variant="outlined" class="rounded-full" />
       <Button
         v-if="inModal"
-        label="Cancel"
+        label="取消"
         severity="secondary"
         type="button"
         class="rounded-full"
         @click="emitLoginResult(true)"
       />
-      <Button label="Submit" severity="primary" type="submit" class="rounded-full px-5">
+      <Button label="提交" severity="primary" type="submit" class="rounded-full px-5">
         <template #icon>
           <i-mdi-login />
         </template>

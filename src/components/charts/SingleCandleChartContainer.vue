@@ -59,15 +59,15 @@ const noDatasetText = computed((): string => {
 
   switch (status) {
     case LoadingStatus.not_loaded:
-      return 'Not loaded yet.';
+      return '尚未加载。';
     case LoadingStatus.loading:
-      return 'Loading...';
+      return '加载中...';
     case LoadingStatus.success:
-      return 'No data available';
+      return '暂无可用数据';
     case LoadingStatus.error:
-      return 'Failed to load data';
+      return '数据加载失败';
     default:
-      return 'Unknown';
+      return '未知状态';
   }
 });
 
@@ -133,28 +133,28 @@ watch(
       <div class="ms-1 md:ms-2 flex flex-wrap md:flex-nowrap items-center gap-1">
         <div class="flex flex-col md:flex-row md:gap-2">
           <div class="flex flex-row flex-wrap gap-2">
-            <small v-if="dataset" class="text-sm text-nowrap" title="Long entry signals"
-              >Long entries: {{ dataset.enter_long_signals || dataset.buy_signals }}</small
+            <small v-if="dataset" class="text-sm text-nowrap" title="多头入场信号"
+              >多头入场：{{ dataset.enter_long_signals || dataset.buy_signals }}</small
             >
-            <small v-if="dataset" class="text-sm text-nowrap" title="Long exit signals"
-              >Long exit: {{ dataset.exit_long_signals || dataset.sell_signals }}</small
+            <small v-if="dataset" class="text-sm text-nowrap" title="多头离场信号"
+              >多头离场：{{ dataset.exit_long_signals || dataset.sell_signals }}</small
             >
           </div>
           <div class="flex flex-row flex-wrap gap-2">
             <small v-if="dataset && dataset.enter_short_signals" class="text-sm text-nowrap"
-              >Short entries: {{ dataset.enter_short_signals }}</small
+              >空头入场：{{ dataset.enter_short_signals }}</small
             >
             <small v-if="dataset && dataset.exit_short_signals" class="text-sm text-nowrap"
-              >Short exits: {{ dataset.exit_short_signals }}</small
+              >空头离场：{{ dataset.exit_short_signals }}</small
             >
           </div>
         </div>
       </div>
       <div>
-        {{ pair || 'Pair' }}
+        {{ pair || '交易对' }}
       </div>
       <div v-if="isLoadingDataset">
-        <ProgressSpinner class="w-4 h-4" stroke-width="4" small label="Spinning" />
+        <ProgressSpinner class="w-4 h-4" stroke-width="4" small label="加载中" />
       </div>
       <div v-else class="w-4 h-4"></div>
     </div>
@@ -176,13 +176,11 @@ watch(
           :label-side="settingsStore.chartLabelSide"
         />
         <div v-else class="m-auto">
-          <ProgressSpinner v-if="isLoadingDataset" class="w-5 h-5" label="Spinning" />
+          <ProgressSpinner v-if="isLoadingDataset" class="w-5 h-5" label="加载中" />
           <div v-else class="text-lg">
             {{ noDatasetText }}
           </div>
-          <p v-if="botStore.activeBot.historyTakesLonger">
-            This is taking longer than expected ... Hold on ...
-          </p>
+          <p v-if="botStore.activeBot.historyTakesLonger">加载时间比预期更长，请稍候...</p>
         </div>
       </div>
     </div>

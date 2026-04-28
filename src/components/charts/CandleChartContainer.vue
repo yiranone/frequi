@@ -150,7 +150,7 @@ const singlePairSelection = computed({
           class="w-80"
           :options="availablePairs"
           optionlabel=""
-          placeholder="Select pairs to plot"
+          placeholder="选择要绘制的交易对"
           size="small"
           filter
         >
@@ -167,7 +167,7 @@ const singlePairSelection = computed({
         </Select>
 
         <Button
-          title="Refresh chart"
+          title="刷新图表"
           severity="secondary"
           :disabled="botStore.activeBot.plotMultiPairs.length === 0"
           size="small"
@@ -176,25 +176,20 @@ const singlePairSelection = computed({
           <i-mdi-refresh />
         </Button>
         <BaseCheckbox v-model="settingsStore.multiPairSelection">
-          <span class="text-nowrap">Multi pair</span>
+          <span class="text-nowrap">多交易对</span>
         </BaseCheckbox>
         <div class="ms-auto flex items-center gap-2">
           <BaseCheckbox v-model="settingsStore.showMarkArea">
-            <span class="text-nowrap">Show Chart Areas</span>
+            <span class="text-nowrap">显示图表区域</span>
           </BaseCheckbox>
           <BaseCheckbox v-model="settingsStore.useHeikinAshiCandles">
-            <span class="text-nowrap">Heikin Ashi</span>
+            <span class="text-nowrap">平均 K 线</span>
           </BaseCheckbox>
 
           <PlotConfigSelect></PlotConfigSelect>
 
           <div class="me-0 md:me-1">
-            <Button
-              size="small"
-              title="Plot configurator"
-              severity="secondary"
-              @click="showConfigurator"
-            >
+            <Button size="small" title="绘图配置器" severity="secondary" @click="showConfigurator">
               <template #icon>
                 <i-mdi-cog width="12" height="12" />
               </template>
@@ -224,13 +219,13 @@ const singlePairSelection = computed({
         </SingleCandleChartContainer>
       </div>
       <div v-else class="flex flex-col items-center justify-center h-full w-full">
-        <span class="text-2xl font-semibold">No pair selected</span>
+        <span class="text-2xl font-semibold">尚未选择交易对</span>
       </div>
     </div>
     <Dialog
       id="plotConfiguratorModal"
       v-model:visible="showPlotConfigModal"
-      header="Plot Configurator"
+      header="绘图配置器"
       ok-only
       hide-backdrop
     >

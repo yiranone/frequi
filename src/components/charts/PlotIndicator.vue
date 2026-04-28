@@ -12,6 +12,12 @@ const props = withDefaults(
 
 const emit = defineEmits<{ 'update:modelValue': [value: IndicatorConfig] }>();
 
+const graphTypeOptions: { text: string; value: ChartTypeString }[] = [
+  { text: '折线图', value: ChartType.line },
+  { text: '柱状图', value: ChartType.bar },
+  { text: '散点图', value: ChartType.scatter },
+];
+
 const selColor_ = ref(randomColor());
 const selColor = computed({
   get: () => selColor_.value,
@@ -27,7 +33,6 @@ const selColor = computed({
   },
 });
 const graphType = ref<ChartTypeString>(ChartType.line);
-const availableGraphTypes = ref<ChartTypeString[]>(Object.keys(ChartType) as ChartTypeString[]);
 const selAvailableIndicator = ref('');
 const cancelled = ref(false);
 const fillTo = ref('');
@@ -96,18 +101,20 @@ watchDebounced(
   <div>
     <div class="flex flex-col lg:flex-row justify-between mt-1">
       <div class="flex flex-col w-full">
-        <label for="plotTypeSelector" class="form-label">Type</label>
+        <label for="plotTypeSelector" class="form-label">图表类型</label>
         <Select
           id="plotTypeSelector"
           v-model="graphType"
           class="text-left"
           size="small"
-          :options="availableGraphTypes"
+          :options="graphTypeOptions"
+          option-label="text"
+          option-value="value"
         >
         </Select>
       </div>
       <div class="flex flex-col w-full">
-        <label for="selAvailableIndicator" class="colsel">Color</label>
+        <label for="selAvailableIndicator" class="colsel">颜色</label>
         <InputGroup>
           <InputGroupAddon class="p-0!">
             <ColorPicker v-model="selColor" type="color" class="m-auto"></ColorPicker>
@@ -128,10 +135,10 @@ watchDebounced(
       v-model="fillTo"
       :columns="columns"
       class="mt-1"
-      label="Area chart - Fill to (leave empty for line chart)"
+      label="面积图填充目标（留空则显示为折线图）"
     />
     <div v-if="graphType === ChartType.scatter" class="flex flex-col mt-2 gap-1 items-center">
-      <label for="scatterSymbolSize" class="text-nowrap">Scatter symbol size</label>
+      <label for="scatterSymbolSize" class="text-nowrap">散点尺寸</label>
       <InputNumber
         id="scatterSymbolSize"
         v-model="scatterSymbolSize"

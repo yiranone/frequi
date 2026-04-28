@@ -48,7 +48,7 @@ const usedColumns = computed((): { text: string; value: string }[] => {
   }
   return usedCols.map((col) => ({
     value: col,
-    text: !props.columns.includes(col) ? `${col} <-- not available in this chart` : col,
+    text: !props.columns.includes(col) ? `${col} <-- 当前图表不可用` : col,
   }));
 });
 
@@ -177,7 +177,7 @@ function loadConfigFromString() {
 
 async function loadPlotConfigFromStrategy() {
   if (botStore.activeBot.isWebserverMode && !botStore.activeBot.strategy?.strategy) {
-    showAlert(`No strategy selected, can't load plot config.`);
+    showAlert('尚未选择策略，无法载入绘图配置。');
     return;
   }
   try {
@@ -187,7 +187,7 @@ async function loadPlotConfigFromStrategy() {
     }
   } catch (error) {
     //
-    showAlert('Failed to load Plot configuration from Strategy.');
+    showAlert('从策略载入绘图配置失败。');
   }
 }
 
@@ -266,23 +266,23 @@ const markAreaZIndex = computed({
 
 <template>
   <div v-if="columns">
-    <label for="idPlotConfigName">Plot config name</label>
+    <label for="idPlotConfigName">绘图配置名称</label>
     <PlotConfigSelect allow-edit></PlotConfigSelect>
     <Divider />
-    <BaseCheckbox v-model="showTagsInTooltips" class="mb-1">Show Tags in Tooltips</BaseCheckbox>
+    <BaseCheckbox v-model="showTagsInTooltips" class="mb-1">在提示信息中显示标签</BaseCheckbox>
     <div class="grid grid-cols-2 items-center gap-2 w-full">
-      <label>Mark Area Z-Index <br /><small>(defaults to 1 - Candlechart is at Z=2)</small></label>
+      <label>区域标记层级 <br /><small>默认值为 1，K 线图位于第 2 层</small></label>
 
       <InputNumber v-model="markAreaZIndex" class="mb-1" size="small" />
     </div>
     <Divider />
 
-    <label for="fieldSel" class="mb">Target Plot</label>
+    <label for="fieldSel" class="mb">目标绘图区</label>
     <EditValue
       v-model="selSubPlot"
       :allow-edit="!isMainPlot"
       allow-add
-      editable-name="plot configuration"
+      editable-name="绘图配置"
       align-vertical
       @new="addSubplot"
       @delete="deleteSubplot"
@@ -303,12 +303,12 @@ const markAreaZIndex = computed({
     </EditValue>
     <Divider />
     <div>
-      <label for="selectedIndicators">Indicators in this plot</label>
+      <label for="selectedIndicators">当前绘图区指标</label>
       <ListBox
         id="selectedIndicators"
         v-model="selIndicatorName"
         size="small"
-        empty-message="No indicators selected"
+        empty-message="尚未选择指标"
         option-label="text"
         option-value="value"
         :disabled="addNewIndicator"
@@ -324,31 +324,31 @@ const markAreaZIndex = computed({
     <div class="flex flex-row mt-1 gap-1">
       <Button
         severity="secondary"
-        title="Remove indicator to plot"
+        title="移除当前指标"
         size="small"
         :disabled="!selIndicatorName"
         class="col"
         @click="removeIndicator"
       >
-        Remove indicator
+        移除指标
       </Button>
       <Button
         severity="secondary"
-        title="Load indicator config from template"
+        title="从模板载入指标配置"
         size="small"
         @click="fromPlotTemplateVisible = !fromPlotTemplateVisible"
       >
-        Indicator from template
+        从模板导入指标
       </Button>
       <Button
         severity="primary"
-        title="Add indicator to plot"
+        title="添加指标到绘图区"
         size="small"
         class="col"
         :disabled="addNewIndicator"
         @click="clickAddNewIndicator"
       >
-        Add new indicator
+        添加新指标
       </Button>
     </div>
 
@@ -356,7 +356,7 @@ const markAreaZIndex = computed({
       v-if="addNewIndicator"
       :columns="columns"
       class="mt-1"
-      label="Select indicator to add"
+      label="选择要添加的指标"
       @indicator-selected="addNewIndicatorSelected"
     />
 
@@ -375,9 +375,9 @@ const markAreaZIndex = computed({
         severity="secondary"
         size="small"
         :disabled="addNewIndicator"
-        title="Reset to last saved configuration"
+        title="恢复为上次保存的配置"
         @click="loadPlotConfig"
-        >Reset</Button
+        >重置</Button
       >
 
       <!--
@@ -402,16 +402,16 @@ const markAreaZIndex = computed({
         size="small"
         @click="loadPlotConfigFromStrategy"
       >
-        From strategy
+        从策略载入
       </Button>
       <Button
         id="showButton"
         severity="secondary"
         size="small"
         :disabled="addNewIndicator"
-        title="Show configuration for easy transfer to a strategy"
+        title="显示配置文本，便于复制到策略中"
         @click="showConfig = !showConfig"
-        >{{ showConfig ? 'Hide' : 'Show' }}</Button
+        >{{ showConfig ? '隐藏' : '显示' }}</Button
       >
 
       <Button
@@ -419,9 +419,9 @@ const markAreaZIndex = computed({
         size="small"
         data-toggle="tooltip"
         :disabled="addNewIndicator"
-        title="Save configuration"
+        title="保存配置"
         @click="savePlotConfig"
-        >Save</Button
+        >保存</Button
       >
     </div>
     <Button
@@ -429,9 +429,9 @@ const markAreaZIndex = computed({
       class="ms-1 mt-1"
       severity="secondary"
       size="small"
-      title="Load configuration from text box below"
+      title="从下方文本框载入配置"
       @click="loadConfigFromString"
-      >Load from String</Button
+      >从文本载入</Button
     >
     <div v-if="showConfig" class="w-full ms-1 mt-2">
       <Textarea

@@ -4,7 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Home',
+    name: '首页',
     component: () => import('@/views/HomeView.vue'),
     meta: {
       allowAnonymous: true,
@@ -12,32 +12,32 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/trade',
-    name: 'Freqtrade Trading',
+    name: '交易台',
     component: () => import('@/views/TradingView.vue'),
   },
   {
     path: '/graph',
-    name: 'Freqtrade Graph',
+    name: '图表',
     component: () => import('@/views/ChartsView.vue'),
   },
   {
     path: '/logs',
-    name: 'Freqtrade Logs',
+    name: '日志',
     component: () => import('@/views/LogView.vue'),
   },
   {
     path: '/backtest',
-    name: 'Freqtrade Backtest',
+    name: '回测',
     component: () => import('@/views/BacktestingView.vue'),
   },
   {
     path: '/dashboard',
-    name: 'Freqtrade Dashboard',
+    name: '总览',
     component: () => import('@/views/DashboardView.vue'),
   },
   {
     path: '/balance',
-    name: 'Freqtrade Balance',
+    name: '资产',
     component: () => import('@/components/ftbot/BotBalance.vue'),
   },
   {
@@ -56,12 +56,12 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/settings',
-    name: 'Freqtrade Settings',
+    name: '设置',
     component: () => import('@/views/SettingsView.vue'),
   },
   {
     path: '/login',
-    name: 'Login',
+    name: '连接机器人',
     component: () => import('@/views/LoginView.vue'),
     meta: {
       allowAnonymous: true,
@@ -69,12 +69,12 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/pairlist_config',
-    name: 'Pairlist Configuration',
+    name: '交易对白名单配置',
     component: () => import('@/views/PairlistConfigView.vue'),
   },
   {
     path: '/download_data',
-    name: 'Download Data',
+    name: '下载数据',
     component: () => import('@/views/DownloadDataView.vue'),
   },
   {
@@ -93,7 +93,7 @@ router.beforeEach((to) => {
   // Init bots here...
   initBots();
   const botStore = useBotStore();
-  if (!to.meta?.allowAnonymous && !botStore.hasBots) {
+  if (!to.meta?.allowAnonymous && (!botStore.hasBots || !botStore.activeBotorUndefined)) {
     // Forward to login if login is required
     return {
       path: '/login',

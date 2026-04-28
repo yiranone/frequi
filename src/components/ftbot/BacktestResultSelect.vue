@@ -38,7 +38,7 @@ function confirmInput(run_id: string, result: BacktestResultInMemory) {
 
 <template>
   <div class="flex flex-col items-stretch">
-    <h3 class="font-bold text-2xl">Available results:</h3>
+    <h3 class="font-bold text-2xl">可用结果：</h3>
     <ul
       class="ms-2 divide-y border-x border-surface-500 rounded-sm border-y divide-solid divide-surface-500"
     >
@@ -60,7 +60,7 @@ function confirmInput(run_id: string, result: BacktestResultInMemory) {
               class="flex-nowrap"
               size="small"
               severity="secondary"
-              title="Modify result notes."
+              title="编辑结果备注"
               @click.stop="result.metadata.editing = !result.metadata.editing"
             >
               <template #icon>
@@ -71,7 +71,7 @@ function confirmInput(run_id: string, result: BacktestResultInMemory) {
               size="small"
               class="flex-nowrap"
               severity="secondary"
-              title="Delete this Result from UI."
+              title="从界面中移除此结果"
               @click.stop="emit('removeResult', key)"
             >
               <template #icon>
@@ -81,9 +81,9 @@ function confirmInput(run_id: string, result: BacktestResultInMemory) {
           </div>
         </template>
         <template v-if="result.metadata.editing">
-          <Textarea v-model="result.metadata.notes" placeholder="notes" size="small"> </Textarea>
+          <Textarea v-model="result.metadata.notes" placeholder="备注" size="small"> </Textarea>
 
-          <Button size="small" title="Confirm" @click.stop="confirmInput(key, result)">
+          <Button size="small" title="确认" @click.stop="confirmInput(key, result)">
             <template #icon>
               <i-mdi-check />
             </template>

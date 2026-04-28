@@ -46,7 +46,7 @@ const showIndicatorMapping = ref(false);
 <template>
   <div v-if="visible" class="pt-1">
     <div v-if="!showIndicatorMapping" class="w-full">
-      <label for="selectTemplate">Select Template</label>
+      <label for="selectTemplate">选择模板</label>
       <ListBox
         id="selectTemplate"
         v-model="selTemplateName"
@@ -56,7 +56,7 @@ const showIndicatorMapping = ref(false);
       </ListBox>
     </div>
     <div v-else>
-      <h5 class="mt-1 text-center text-md mb-1">Re-map indicators</h5>
+      <h5 class="mt-1 text-center text-md mb-1">重新映射指标</h5>
       <div
         v-for="indicator in Object.keys(indicatorMap)"
         :key="indicator"
@@ -74,7 +74,7 @@ const showIndicatorMapping = ref(false);
       </div>
     </div>
     <div class="mt-2 flex gap-1 justify-end">
-      <Button size="small" title="Abort" severity="secondary" @click="visible = false">
+      <Button size="small" title="取消" severity="secondary" @click="visible = false">
         <i-mdi-close />
       </Button>
       <Button
@@ -82,8 +82,8 @@ const showIndicatorMapping = ref(false);
         :disabled="!selTemplateName"
         size="small"
         style="width: 33%"
-        title="Use template"
-        label=" Use Template"
+        title="使用模板"
+        label="使用模板"
         severity="primary"
         @click="clickStartUseTemplate"
       >
@@ -96,14 +96,14 @@ const showIndicatorMapping = ref(false);
         :disabled="!selTemplateName"
         size="small"
         style="width: 33%"
-        title="Apply template"
+        title="应用模板"
         severity="primary"
         @click="fromTemplateApply"
       >
         <template #icon>
           <i-mdi-check class="me-1" />
         </template>
-        Apply Template
+        应用模板
       </Button>
     </div>
   </div>

@@ -12,13 +12,13 @@ const autoRefreshLoc = computed({
 
 <template>
   <div class="flex items-center ms-2">
-    <BaseCheckbox v-model="autoRefreshLoc" size="small" title="Auto Refresh" />
+    <BaseCheckbox v-model="autoRefreshLoc" size="small" title="自动刷新" />
     <Button
       class="m-1"
       severity="contrast"
       variant="outlined"
       size="small"
-      title="Auto Refresh all bots now"
+      title="立即刷新全部机器人"
       @click="botStore.allRefreshFull"
     >
       <template #icon>

@@ -17,8 +17,8 @@ const selectedTrade = ref({} as Trade);
 const sortDescendingOrder = ref(true);
 const sortMethod = ref('openDate');
 const sortMethodOptions = [
-  { text: 'Open date', value: 'openDate' },
-  { text: 'Profit %', value: 'profit' },
+  { text: '开仓时间', value: 'openDate' },
+  { text: '收益率', value: 'profit' },
 ];
 
 const onTradeSelect = (trade: Trade) => {
@@ -46,7 +46,7 @@ watch(
 <template>
   <div>
     <div class="flex justify-center">
-      <span class="me-2">Sort by:</span>
+      <span class="me-2">排序方式：</span>
       <RadioButtonGroup v-model="sortMethod" :options="sortMethodOptions" name="radio-options">
         <div v-for="opt in sortMethodOptions" :key="opt.value" class="flex items-center">
           <RadioButton :id="`id-${opt.value}`" :value="opt.value" />
@@ -61,9 +61,9 @@ watch(
         severity="secondary"
         variant="text"
         class="w-full flex flex-wrap justify-center items-center"
-        :title="'Trade Navigation'"
+        :title="'交易导航'"
         @click="sortDescendingOrder = !sortDescendingOrder"
-        >Trade Navigation {{ sortDescendingOrder ? '&#8595;' : '&#8593;' }}
+        >交易导航 {{ sortDescendingOrder ? '&#8595;' : '&#8593;' }}
       </Button>
       <li
         v-for="(trade, i) in sortedTrades"
@@ -80,7 +80,7 @@ watch(
           <div class="flex flex-col">
             <div>
               <span v-if="botStore.activeBot.botState.trading_mode !== 'spot'">{{
-                trade.is_short ? 'S-' : 'L-'
+                trade.is_short ? '空-' : '多-'
               }}</span>
               <DateTimeTZ :date="trade.open_timestamp" />
             </div>
@@ -108,13 +108,15 @@ watch(
                 v-for="order in trade.orders?.filter((o) => o.order_filled_timestamp !== null)"
                 :key="order.order_timestamp"
               >
-                {{ order.ft_order_side }} {{ order.amount }} at {{ order.safe_price }}
+                {{ order.ft_order_side }} {{ order.amount }}，成交价 {{ order.safe_price }}
               </li>
             </ul>
           </div>
         </Transition>
       </li>
-      <div v-if="trades.length === 0">No trades to show...</div>
+      <div v-if="trades.length === 0" class="p-4 text-center text-sm text-surface-500">
+        暂无交易记录
+      </div>
     </ul>
   </div>
 </template>

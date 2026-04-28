@@ -8,7 +8,7 @@ function removePairLock(item: Lock) {
   if (item.id !== undefined) {
     botStore.activeBot.deleteLock(item.id);
   } else {
-    showAlert('This Freqtrade version does not support deleting locks.');
+    showAlert('当前 Freqtrade 版本不支持删除锁定。');
   }
 }
 </script>
@@ -16,7 +16,7 @@ function removePairLock(item: Lock) {
 <template>
   <div>
     <div class="mb-2">
-      <label class="me-auto text-xl">Pair Locks</label>
+      <label class="me-auto text-xl">交易对锁定</label>
       <Button class="float-end" severity="secondary" @click="botStore.activeBot.getLocks">
         <template #icon>
           <i-mdi-refresh />
@@ -25,20 +25,20 @@ function removePairLock(item: Lock) {
     </div>
     <div>
       <DataTable size="small" :value="botStore.activeBot.activeLocks">
-        <Column field="pair" header="Pair"></Column>
-        <Column field="lock_end_timestamp" header="Until">
+        <Column field="pair" header="交易对"></Column>
+        <Column field="lock_end_timestamp" header="锁定到">
           <template #body="{ data, field }">
             {{ timestampms(data[field as string]) }}
           </template>
         </Column>
-        <Column field="reason" header="Reason"></Column>
-        <Column field="actions" header="Actions">
+        <Column field="reason" header="原因"></Column>
+        <Column field="actions" header="操作">
           <template #body="{ data }">
             <Button
               class="btn-xs ms-1"
               size="small"
               severity="secondary"
-              title="Delete Lock"
+              title="删除锁定"
               @click="removePairLock(data as Lock)"
             >
               <i-mdi-delete />

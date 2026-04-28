@@ -20,15 +20,17 @@ function buildToolTip(
   side: string,
   quoteCurrency: string,
 ): string {
-  let tooltip = `${trade.is_short ? 'Short' : 'Long'} ${side}
+  const direction = trade.is_short ? '空头' : '多头';
+  const action = side === 'entry' ? '入场' : '离场';
+  let tooltip = `${direction}${action}
   ${formatPercent(trade.profit_ratio)} ${
     trade.profit_abs ? '(' + formatPriceCurrency(trade.profit_abs, quoteCurrency) + ')' : ''
   }
   ${buildTooltipCost(order, quoteCurrency)}
-  Enter-tag: ${trade.enter_tag ?? ''}
-  Order Price: ${formatPriceCurrency(order.safe_price, quoteCurrency)}`;
-  tooltip += `${'ft_order_tag' in order && order.ft_order_tag && trade.enter_tag != order.ft_order_tag ? '\nOrder-Tag: ' + order.ft_order_tag : ''}`;
-  tooltip += `${trade.exit_reason ? '\nExit-Tag: ' + trade.exit_reason : ''}`;
+  入场标签：${trade.enter_tag ?? ''}
+  订单价格：${formatPriceCurrency(order.safe_price, quoteCurrency)}`;
+  tooltip += `${'ft_order_tag' in order && order.ft_order_tag && trade.enter_tag != order.ft_order_tag ? '\n订单标签：' + order.ft_order_tag : ''}`;
+  tooltip += `${trade.exit_reason ? '\n离场标签：' + trade.exit_reason : ''}`;
   return tooltip;
 }
 
@@ -37,10 +39,10 @@ function buildAdjustmentToolTip(
   order: Order | BTOrder,
   quoteCurrency: string,
 ): string {
-  let tooltip = `${trade.is_short ? 'Short' : 'Long'} adjustment
+  let tooltip = `${trade.is_short ? '空头' : '多头'}仓位调整
   ${buildTooltipCost(order, quoteCurrency)}
-  Enter-tag: ${trade.enter_tag ?? ''}`;
-  tooltip += `${'ft_order_tag' in order && order.ft_order_tag ? '\nOrder-Tag: ' + order.ft_order_tag : ''}`;
+  入场标签：${trade.enter_tag ?? ''}`;
+  tooltip += `${'ft_order_tag' in order && order.ft_order_tag ? '\n订单标签：' + order.ft_order_tag : ''}`;
 
   return tooltip;
 }
@@ -95,8 +97,8 @@ function getTradeEntries(dataset: PairHistory, trades: Trade[]) {
                 OPEN_CLOSE_SYMBOL,
                 order.ft_order_side == 'sell' ? 180 : 0,
                 trade.is_short ? SHORT_COLOR : LONG_COLOR,
-                (trade.is_short ? 'Short' : 'Long') +
-                  (!order.order_filled_timestamp ? ' (open)' : ''),
+                (trade.is_short ? '空头' : '多头') +
+                  (!order.order_filled_timestamp ? '（持仓中）' : ''),
                 buildToolTip(trade, order, 'entry', quoteCurrency),
               ]);
               // Trade exit
@@ -204,7 +206,7 @@ export function generateTradeSeries(
       data: [
         [
           {
-            name: 'Stoploss',
+            name: '止损线',
             yAxis: openTrade.stop_loss_abs,
             lineStyle: {
               color: '#ff0000AA',

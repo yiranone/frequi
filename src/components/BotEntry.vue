@@ -16,8 +16,8 @@ function confirmRemoveBot() {
 
 function removeBotQuestion() {
   msgBox.value?.show({
-    title: 'Logout confirmation',
-    message: `Really remove (logout) from ${props.bot.botName} (${props.bot.botId})?`,
+    title: '移除机器人确认',
+    message: `确定要移除并退出 ${props.bot.botName} (${props.bot.botId}) 吗？`,
     accept: () => {
       confirmRemoveBot();
     },
@@ -52,14 +52,14 @@ const autoRefreshLoc = computed({
         <ToggleSwitch v-model="autoRefreshLoc" class="mr-2" />
         <div
           v-if="selectedBotStore.isBotLoggedIn"
-          :title="selectedBotStore.isBotOnline ? 'Online' : 'Offline'"
+          :title="selectedBotStore.isBotOnline ? '在线' : '离线'"
         >
           <i-mdi-circle
             class="mx-1"
             :class="selectedBotStore.isBotOnline ? 'text-green-500' : 'text-red-500'"
           />
         </div>
-        <div v-else title="Login info expired, please login again.">
+        <div v-else title="登录信息已过期，请重新登录。">
           <i-mdi-cancel class="text-red-500 mx-1" />
         </div>
       </div>
@@ -71,7 +71,7 @@ const autoRefreshLoc = computed({
           severity="secondary"
           variant="outlined"
           class="rounded-full"
-          title="Edit bot"
+          title="编辑机器人"
           @click="$emit('edit')"
         >
           <i-mdi-pencil />
@@ -82,7 +82,7 @@ const autoRefreshLoc = computed({
           severity="secondary"
           variant="outlined"
           class="rounded-full"
-          title="Login again"
+          title="重新登录"
           @click="$emit('editLogin')"
         >
           <i-mdi-login />
@@ -92,7 +92,7 @@ const autoRefreshLoc = computed({
           severity="secondary"
           variant="outlined"
           class="rounded-full"
-          title="Delete bot"
+          title="删除机器人"
           @click="removeBotQuestion"
         >
           <i-mdi-delete />

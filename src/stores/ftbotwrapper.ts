@@ -290,7 +290,7 @@ export const useBotStore = defineStore('ftbot-wrapper', {
         const firstBot = Object.keys(this.availableBots)[0];
         let selBot: string | undefined = firstBot;
         if (selBotId) {
-          selBot = Object.keys(this.availableBots).find((x) => x === selBotId);
+          selBot = Object.keys(this.availableBots).find((x) => x === selBotId) ?? firstBot;
         }
         if (!selBot) return;
         const bot = this.availableBots[selBot];

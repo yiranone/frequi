@@ -16,7 +16,7 @@ const selectedTimeframe = ref('');
 // The below list must always remain sorted correctly!
 const availableTimeframesBase = [
   // Placeholder value
-  { value: '', text: 'Use strategy default' },
+  { value: '', text: '使用策略默认值' },
   '1m',
   '3m',
   '5m',
@@ -53,7 +53,7 @@ const emitSelectedTimeframe = () => {
 <template>
   <Select
     v-model="selectedTimeframe"
-    placeholder="Use strategy default"
+    placeholder="使用策略默认值"
     :option-label="(option) => option.text || option"
     :option-value="(option) => option.value ?? option"
     :size="size"

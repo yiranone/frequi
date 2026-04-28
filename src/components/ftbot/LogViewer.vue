@@ -1,13 +1,19 @@
 <script setup lang="ts">
 const botStore = useBotStore();
 const scrollContainer = ref<HTMLElement | null>(null);
+const activeBot = computed(() => botStore.activeBotorUndefined);
+const logs = computed(() => activeBot.value?.lastLogs ?? []);
 
 onMounted(async () => {
   refreshLogs();
 });
 
 async function refreshLogs() {
-  await botStore.activeBot.getLogs();
+  if (!activeBot.value) {
+    return;
+  }
+
+  await activeBot.value.getLogs();
   scrollToBottom();
 }
 
@@ -35,8 +41,14 @@ function scrollToBottom() {
       ref="scrollContainer"
       class="border border-surface-500 p-1 text-start text-sm pb-5 w-full h-full overflow-auto"
     >
+      <div
+        v-if="!activeBot"
+        class="flex h-full min-h-[320px] items-center justify-center p-6 text-center text-surface-500"
+      >
+        当前没有可用的机器人日志。请先连接机器人，或等待机器人状态恢复。
+      </div>
       <pre
-        v-for="(log, index) in botStore.activeBot.lastLogs"
+        v-for="(log, index) in logs"
         :key="index"
         class="m-0 overflow-visible"
         style="line-height: unset"
@@ -49,14 +61,21 @@ function scrollToBottom() {
         id="refresh-logs"
         severity="secondary"
         size="small"
-        title="Reload Logs"
+        title="重新加载日志"
+        :disabled="!activeBot"
         @click="refreshLogs"
       >
         <template #icon>
           <i-mdi-refresh />
         </template>
       </Button>
-      <Button size="small" title="Scroll to bottom" severity="secondary" @click="scrollToBottom">
+      <Button
+        size="small"
+        title="滚动到底部"
+        severity="secondary"
+        :disabled="!activeBot"
+        @click="scrollToBottom"
+      >
         <template #icon>
           <i-mdi-arrow-down-thick />
         </template>

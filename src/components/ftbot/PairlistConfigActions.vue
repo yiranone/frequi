@@ -5,7 +5,7 @@ const pairlistStore = usePairlistConfigStore();
 <template>
   <div class="flex flex-col sm:flex-row mb-2 gap-2">
     <Button
-      title="Save configuration"
+      title="保存配置"
       size="small"
       severity="primary"
       @click="pairlistStore.saveConfig(pairlistStore.config.name)"
@@ -35,7 +35,7 @@ const pairlistStore = usePairlistConfigStore();
       />
     </EditValue>
     <Button
-      title="Evaluate pairlist"
+      title="评估交易对列表"
       :disabled="pairlistStore.evaluating || !pairlistStore.pairlistValid"
       severity="primary"
       class="px-5"
@@ -43,7 +43,7 @@ const pairlistStore = usePairlistConfigStore();
       @click="pairlistStore.startPairlistEvaluation()"
     >
       <ProgressSpinner v-if="pairlistStore.evaluating" class="h-5 w-5"></ProgressSpinner>
-      <span v-else>Evaluate</span>
+      <span v-else>开始评估</span>
     </Button>
   </div>
 </template>

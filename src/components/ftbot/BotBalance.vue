@@ -48,15 +48,15 @@ const chartValues = computed<BalanceValues[]>(() => {
 
 const tableFields = computed(() => {
   return [
-    { field: 'currency', header: 'Currency' },
+    { field: 'currency', header: '币种' },
     {
       field: showBotOnly.value && canUseBotBalance.value ? 'bot_owned' : 'free',
-      header: 'Available',
+      header: '可用余额',
       asCurrency: true,
     },
     {
       field: showBotOnly.value && canUseBotBalance.value ? 'est_stake_bot' : 'est_stake',
-      header: `in ${botStore.activeBot.balance.stake}`,
+      header: `折合 ${botStore.activeBot.balance.stake}`,
       asCurrency: true,
     },
   ];
@@ -72,14 +72,16 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
+  <div class="space-y-4">
     <div class="flex flex-wrap flex-row mb-2 justify-end items-center">
-      <label class="text-xl ms-1 me-auto mb-0">{{ showBotOnly ? 'Bot' : 'Account' }} Balance</label>
+      <label class="text-xl ms-1 me-auto mb-0">
+        {{ showBotOnly ? '机器人资产' : '账户资产' }}
+      </label>
       <div class="flex flex-row gap-1">
         <Button
           v-if="canUseBotBalance"
           severity="secondary"
-          :tooltip="!showBotOnly ? 'Showing Account balance' : 'Showing Bot balance'"
+          :tooltip="!showBotOnly ? '当前显示账户资产' : '当前显示机器人资产'"
           @click="showBotOnly = !showBotOnly"
         >
           <template #icon>
@@ -89,7 +91,7 @@ onMounted(() => {
         </Button>
         <Button
           severity="secondary"
-          :tooltip="!hideSmallBalances ? 'Hide small balances' : 'Show all balances'"
+          :tooltip="!hideSmallBalances ? '隐藏小额资产' : '显示全部资产'"
           @click="hideSmallBalances = !hideSmallBalances"
         >
           <template #icon>
@@ -121,14 +123,14 @@ onMounted(() => {
         >
         <ColumnGroup type="footer">
           <Row>
-            <Column footer="Total" f />
+            <Column footer="合计" f />
             <Column>
               <template #footer>
                 <span
                   class="font-italic"
-                  :title="`Increase over initial capital of ${formatCurrency(
+                  :title="`相对初始资金 ${formatCurrency(
                     botStore.activeBot.balance.starting_capital,
-                  )} ${botStore.activeBot.balance.stake}`"
+                  )} ${botStore.activeBot.balance.stake} 的增长幅度`"
                 >
                   {{ formatPercent(botStore.activeBot.balance.starting_capital_ratio) }}
                 </span>

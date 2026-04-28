@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-
 @import 'tailwindcss';
 
 @plugin 'tailwindcss-primeui';
@@ -26,33 +24,42 @@
 
 @layer frequi {
   :root {
-    --ft-font-body: 'IBM Plex Sans', 'Inter', 'Segoe UI', sans-serif;
-    --ft-font-heading: 'Space Grotesk', 'Avenir Next', 'Segoe UI', sans-serif;
-    --ft-bg-start: #f6fbff;
-    --ft-bg-middle: #eef6ff;
-    --ft-bg-end: #f8f5ea;
-    --ft-text-strong: #09111f;
-    --ft-text-muted: #526074;
-    --ft-panel-bg: rgba(255, 255, 255, 0.76);
-    --ft-panel-border: rgba(15, 23, 42, 0.08);
-    --ft-panel-shadow: 0 30px 90px rgba(15, 23, 42, 0.12);
-    --ft-orb-primary: rgba(14, 165, 233, 0.22);
-    --ft-orb-secondary: rgba(45, 212, 191, 0.18);
-    --ft-orb-tertiary: rgba(251, 191, 36, 0.14);
-    --ft-grid-color: rgba(15, 23, 42, 0.06);
+    --ft-font-body:
+      system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+      'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    --ft-font-heading:
+      system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+      'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    --ft-bg-start: #f4fff8;
+    --ft-bg-middle: #ddf7ec;
+    --ft-bg-end: #cdeee3;
+    --ft-bg-surface: #bbf7d0;
+    --ft-text-strong: #07231c;
+    --ft-text-muted: #4b665d;
+    --ft-panel-bg: rgba(255, 255, 255, 0.82);
+    --ft-panel-border: rgba(6, 78, 59, 0.08);
+    --ft-panel-shadow:
+      0 24px 80px rgba(6, 24, 20, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    --ft-orb-primary: rgba(45, 212, 191, 0.18);
+    --ft-orb-secondary: rgba(16, 185, 129, 0.16);
+    --ft-orb-tertiary: rgba(110, 231, 183, 0.16);
+    --ft-grid-color: rgba(6, 78, 59, 0.045);
+    --ft-card-glow: rgba(94, 234, 212, 0.14);
+    --ft-card-glow-strong: rgba(20, 184, 166, 0.18);
 
-    --p-primary-50: #dbfaff;
-    --p-primary-100: #b8f4ff;
-    --p-primary-200: #75eaff;
-    --p-primary-300: #2ee0ff;
-    --p-primary-400: #00c3e6;
-    --p-primary-500: #0089a1;
-    --p-primary-600: #006c80;
-    --p-primary-700: #005261;
-    --p-primary-800: #003842;
-    --p-primary-900: #001a1f;
-    --p-primary-950: #000d0f;
-    --p-primary-color: var(--p-primary-600);
+    --p-primary-50: #edfdf7;
+    --p-primary-100: #d4f7e8;
+    --p-primary-200: #abefd3;
+    --p-primary-300: #71e0b6;
+    --p-primary-400: #34c997;
+    --p-primary-500: #17ad81;
+    --p-primary-600: #0f8f6c;
+    --p-primary-700: #0d7057;
+    --p-primary-800: #0f5946;
+    --p-primary-900: #0c4839;
+    --p-primary-950: #052b22;
+    --p-primary-color: var(--p-primary-500);
 
     --p-listbox-option-padding: 0.15rem 0.75rem;
     --p-button-secondary-background: var(--p-surface-200);
@@ -67,18 +74,23 @@
   }
 
   .ft-dark-theme {
-    --ft-bg-start: #020814;
-    --ft-bg-middle: #071221;
-    --ft-bg-end: #0d1a24;
-    --ft-text-strong: #ecf6ff;
-    --ft-text-muted: #8ea0b7;
-    --ft-panel-bg: rgba(2, 8, 20, 0.72);
-    --ft-panel-border: rgba(125, 211, 252, 0.14);
-    --ft-panel-shadow: 0 35px 120px rgba(2, 8, 20, 0.52);
-    --ft-orb-primary: rgba(14, 165, 233, 0.28);
-    --ft-orb-secondary: rgba(45, 212, 191, 0.22);
-    --ft-orb-tertiary: rgba(251, 191, 36, 0.16);
-    --ft-grid-color: rgba(148, 163, 184, 0.08);
+    --ft-bg-start: #03110e;
+    --ft-bg-middle: #07221b;
+    --ft-bg-end: #0a2d25;
+    --ft-bg-surface: #14532d;
+    --ft-text-strong: #edfdf7;
+    --ft-text-muted: #8db8a9;
+    --ft-panel-bg: rgba(5, 27, 22, 0.76);
+    --ft-panel-border: rgba(94, 234, 212, 0.12);
+    --ft-panel-shadow:
+      0 36px 120px rgba(2, 8, 20, 0.56),
+      inset 0 1px 0 rgba(148, 163, 184, 0.05);
+    --ft-orb-primary: rgba(45, 212, 191, 0.22);
+    --ft-orb-secondary: rgba(16, 185, 129, 0.16);
+    --ft-orb-tertiary: rgba(110, 231, 183, 0.16);
+    --ft-grid-color: rgba(167, 243, 208, 0.055);
+    --ft-card-glow: rgba(45, 212, 191, 0.16);
+    --ft-card-glow-strong: rgba(20, 184, 166, 0.18);
 
     --p-content-background: var(--p-surface-950);
     --p-menu-background: var(--p-surface-900);
@@ -121,12 +133,14 @@ body,
 
 body {
   overflow-x: hidden;
-  background:
-    radial-gradient(circle at top left, var(--ft-orb-primary), transparent 32%),
-    radial-gradient(circle at 78% 14%, var(--ft-orb-secondary), transparent 28%),
-    linear-gradient(160deg, var(--ft-bg-start), var(--ft-bg-middle) 52%, var(--ft-bg-end));
+  background: var(--ft-bg-surface);
   color: var(--ft-text-strong);
   font-family: var(--ft-font-body);
+  letter-spacing: 0.01em;
+}
+
+body::selection {
+  background: rgba(20, 184, 166, 0.24);
 }
 
 a {
@@ -141,51 +155,35 @@ a {
 }
 
 .ft-shell-pattern {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(to right, var(--ft-grid-color) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--ft-grid-color) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(circle at center, black, transparent 84%);
-  opacity: 0.55;
+  display: none;
 }
 
 .ft-orb {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(14px);
+  display: none;
 }
 
 .ft-orb-primary {
-  top: 6rem;
-  left: -5rem;
-  height: 18rem;
-  width: 18rem;
-  background: var(--ft-orb-primary);
+  display: none;
 }
 
 .ft-orb-secondary {
-  top: 18rem;
-  right: -4rem;
-  height: 16rem;
-  width: 16rem;
-  background: var(--ft-orb-secondary);
+  display: none;
 }
 
 .ft-orb-tertiary {
-  bottom: 8rem;
-  left: 28%;
-  height: 12rem;
-  width: 12rem;
-  background: var(--ft-orb-tertiary);
+  display: none;
 }
 
 .ft-panel-card {
+  position: relative;
   border: 1px solid var(--ft-panel-border);
   background: var(--ft-panel-bg);
   box-shadow: var(--ft-panel-shadow);
-  backdrop-filter: blur(22px);
+  backdrop-filter: blur(28px);
+}
+
+.ft-panel-card::after {
+  content: none;
 }
 
 .ft-heading {
@@ -194,7 +192,7 @@ a {
 }
 
 .ft-gradient-text {
-  background: linear-gradient(135deg, #1d4ed8, #0891b2 45%, #14b8a6 78%, #f59e0b);
+  background: linear-gradient(135deg, #0f766e, #14b8a6 42%, #34d399 76%, #86efac);
   background-clip: text;
   color: transparent;
 }
@@ -207,20 +205,21 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  border: 1px solid rgba(125, 211, 252, 0.18);
+  border: 1px solid rgba(20, 184, 166, 0.18);
   border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.34);
-  padding: 0.45rem 0.8rem;
-  color: #0369a1;
+  background: rgba(255, 255, 255, 0.45);
+  padding: 0.48rem 0.88rem;
+  color: #0f766e;
   font-size: 0.76rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .ft-dark-theme .ft-section-kicker {
-  background: rgba(12, 20, 36, 0.55);
-  color: #7dd3fc;
+  background: rgba(4, 31, 25, 0.62);
+  color: #99f6e4;
 }
 
 .ft-card-highlight {
@@ -229,22 +228,14 @@ a {
 }
 
 .ft-card-highlight::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(125, 211, 252, 0.14),
-    transparent 45%,
-    rgba(251, 191, 36, 0.12)
-  );
-  pointer-events: none;
+  content: none;
 }
 
 .ft-input-shell {
   border: 1px solid rgba(148, 163, 184, 0.24);
-  border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.72);
+  border-radius: 1.1rem;
+  background: rgba(255, 255, 255, 0.74);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
 }
 
 .ft-dark-theme .ft-input-shell {
@@ -258,6 +249,41 @@ a {
 .ft-dark-theme .p-drawer,
 .ft-dark-theme .p-dialog {
   color: var(--ft-text-strong);
+}
+
+.p-button,
+.p-inputtext,
+.p-select,
+.p-multiselect,
+.p-inputnumber-input,
+.p-selectbutton,
+.p-dialog,
+.p-menu {
+  border-radius: 1rem;
+}
+
+.p-button {
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
+}
+
+.p-button:not(.p-button-text):not(.p-button-link) {
+  backdrop-filter: blur(16px);
+}
+
+.p-inputtext,
+.p-inputnumber-input,
+.p-select,
+.p-multiselect {
+  border-color: rgba(148, 163, 184, 0.2);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.ft-dark-theme .p-inputtext,
+.ft-dark-theme .p-inputnumber-input,
+.ft-dark-theme .p-select,
+.ft-dark-theme .p-multiselect {
+  border-color: rgba(125, 211, 252, 0.12);
+  background: rgba(15, 23, 42, 0.66);
 }
 
 body.ft-theme-transition,

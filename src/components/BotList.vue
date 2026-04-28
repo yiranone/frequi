@@ -42,7 +42,7 @@ function editBot(botId: string) {
 function editBotLogin(botId: string) {
   const bot = botStore.botStores[botId];
   if (!bot) {
-    console.error('Bot not found');
+    console.error('未找到机器人');
     return;
   }
   const loginInfo: AuthStorageWithBotId = {
@@ -65,8 +65,8 @@ function stopEditBot(botId: string) {
   <div v-if="botStore.botCount > 0" class="w-full">
     <div v-if="!small" class="mb-4 flex items-center justify-between text-left">
       <div>
-        <h3 class="ft-heading text-2xl font-semibold">Available bots</h3>
-        <p class="ft-muted mt-1 text-sm">Select, reorder and refresh credentials from one list.</p>
+        <h3 class="ft-heading text-2xl font-semibold">已连接机器人</h3>
+        <p class="ft-muted mt-1 text-sm">在一个列表里完成切换、排序和凭据更新。</p>
       </div>
     </div>
     <ul ref="sortContainer" class="flex flex-col gap-3">
@@ -75,7 +75,7 @@ function stopEditBot(botId: string) {
         :key="bot.botId"
         :active="bot.botId === botStore.selectedBot"
         :title="`${bot.botId} - ${bot.botName} - ${bot.botUrl} - ${
-          botStore.botStores[bot.botId]?.isBotLoggedIn ? '' : 'Login info expired!'
+          botStore.botStores[bot.botId]?.isBotLoggedIn ? '' : '登录信息已过期！'
         }`"
         class="ft-panel-card flex items-center rounded-[24px] p-3 transition hover:-translate-y-0.5 hover:shadow-2xl"
         :class="{
@@ -103,6 +103,6 @@ function stopEditBot(botId: string) {
         />
       </li>
     </ul>
-    <LoginModal v-if="!small" ref="loginModal" class="mt-4" login-text="Add new bot" />
+    <LoginModal v-if="!small" ref="loginModal" class="mt-4" login-text="新增机器人" />
   </div>
 </template>

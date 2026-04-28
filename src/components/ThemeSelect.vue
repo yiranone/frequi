@@ -44,9 +44,9 @@ function toggleNight() {
 <template>
   <Button
     variant="link"
-    title="Toggle Night Mode"
+    title="切换深浅主题"
     class="rounded-full border border-white/10 px-3 text-current hover:bg-white/10"
-    :label="showText ? 'Toggle Night Mode' : ''"
+    :label="showText ? '切换主题' : ''"
     @click="toggleNight"
   >
     <template #icon>

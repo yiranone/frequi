@@ -5,6 +5,7 @@ const botStore = useBotStore();
 const layoutStore = useLayoutStore();
 const settingsStore = useSettingsStore();
 const currentBreakpoint = ref('');
+const activeBot = computed(() => botStore.activeBotorUndefined);
 
 const breakpointChanged = (newBreakpoint: string) => {
   // console.log('breakpoint:', newBreakpoint);
@@ -50,9 +51,13 @@ const responsiveGridLayouts = computed(() => {
 });
 
 function refreshOHLCV(pair: string, columns: string[]) {
-  botStore.activeBot.getPairCandles({
+  if (!activeBot.value) {
+    return;
+  }
+
+  activeBot.value.getPairCandles({
     pair: pair,
-    timeframe: botStore.activeBot.timeframe,
+    timeframe: activeBot.value.timeframe,
     columns: columns,
   });
 }
@@ -60,6 +65,7 @@ function refreshOHLCV(pair: string, columns: string[]) {
 
 <template>
   <GridLayout
+    v-if="activeBot"
     class="h-full w-full"
     style="padding: 1px"
     :row-height="50"
@@ -85,57 +91,53 @@ function refreshOHLCV(pair: string, columns: string[]) {
         :h="gridLayoutMultiPane.h"
         drag-allow-from=".drag-header"
       >
-        <DraggableContainer header="Multi Pane">
+        <DraggableContainer header="多面板">
           <div class="mt-1 flex justify-center">
             <BotControls class="mt-1 mb-2" />
           </div>
           <Tabs value="0" scrollable lazy>
             <TabList>
               <Tab value="0" severity="secondary">
-                <div title="Pairs combined">
-                  <span v-if="settingsStore.multiPaneButtonsShowText" class="ms-1"
-                    >Pairs combined</span
-                  >
+                <div title="交易对总览">
+                  <span v-if="settingsStore.multiPaneButtonsShowText" class="ms-1">交易对总览</span>
                   <i-mdi-view-list v-else />
                 </div>
               </Tab>
               <Tab value="1" severity="secondary">
-                <div title="General">
-                  <span v-if="settingsStore.multiPaneButtonsShowText" class="ms-1">General</span>
+                <div title="概览">
+                  <span v-if="settingsStore.multiPaneButtonsShowText" class="ms-1">概览</span>
                   <i-mdi-information v-else />
                 </div>
               </Tab>
               <Tab value="2" severity="secondary">
-                <div title="Performance">
-                  <span v-if="settingsStore.multiPaneButtonsShowText" class="ms-1"
-                    >Performance</span
-                  >
+                <div title="绩效">
+                  <span v-if="settingsStore.multiPaneButtonsShowText" class="ms-1">绩效</span>
                   <i-mdi-chart-line v-else />
                 </div>
               </Tab>
               <Tab value="3" severity="secondary">
-                <div title="Balance">
-                  <span v-if="settingsStore.multiPaneButtonsShowText" class="ms-1">Balance</span>
+                <div title="资产">
+                  <span v-if="settingsStore.multiPaneButtonsShowText" class="ms-1">资产</span>
                   <i-mdi-bank v-else />
                 </div>
               </Tab>
               <Tab value="4" severity="secondary">
-                <div title="Time Breakdown">
-                  <span v-if="settingsStore.multiPaneButtonsShowText" class="ms-1"
-                    >Time Breakdown</span
-                  >
+                <div title="时间拆解">
+                  <span v-if="settingsStore.multiPaneButtonsShowText" class="ms-1">时间拆解</span>
                   <i-mdi-folder-clock v-else />
                 </div>
               </Tab>
               <Tab value="5" severity="secondary">
-                <div title="Pairlist">
-                  <span v-if="settingsStore.multiPaneButtonsShowText" class="ms-1">Pairlist</span>
+                <div title="交易对白名单">
+                  <span v-if="settingsStore.multiPaneButtonsShowText" class="ms-1"
+                    >交易对白名单</span
+                  >
                   <i-mdi-format-list-group v-else />
                 </div>
               </Tab>
               <Tab value="6" severity="secondary">
-                <div title="Pair Locks">
-                  <span v-if="settingsStore.multiPaneButtonsShowText" class="ms-1">Pair Locks</span>
+                <div title="交易对锁定">
+                  <span v-if="settingsStore.multiPaneButtonsShowText" class="ms-1">交易对锁定</span>
                   <i-mdi-lock-alert v-else />
                 </div>
               </Tab>
@@ -181,13 +183,13 @@ function refreshOHLCV(pair: string, columns: string[]) {
         :h="gridLayoutOpenTrades.h"
         drag-allow-from=".drag-header"
       >
-        <DraggableContainer header="Open Trades">
+        <DraggableContainer header="当前持仓">
           <TradeList
             class="open-trades"
             :trades="botStore.activeBot.openTrades"
-            title="Open trades"
+            title="当前持仓"
             :active-trades="true"
-            empty-text="Currently no open trades."
+            empty-text="当前没有持仓。"
           />
         </DraggableContainer>
       </GridItem>
@@ -201,13 +203,13 @@ function refreshOHLCV(pair: string, columns: string[]) {
         :h="gridLayoutTradeHistory.h"
         drag-allow-from=".drag-header"
       >
-        <DraggableContainer header="Closed Trades">
+        <DraggableContainer header="历史成交">
           <TradeList
             class="trade-history"
             :trades="botStore.activeBot.closedTrades"
-            title="Trade history"
+            title="历史成交"
             :show-filter="true"
-            empty-text="No closed trades so far."
+            empty-text="暂无已平仓记录。"
           />
         </DraggableContainer>
       </GridItem>
@@ -226,7 +228,7 @@ function refreshOHLCV(pair: string, columns: string[]) {
         :min-h="4"
         drag-allow-from=".drag-header"
       >
-        <DraggableContainer header="Trade Detail">
+        <DraggableContainer header="交易详情">
           <TradeDetail
             :trade="botStore.activeBot.tradeDetail"
             :stake-currency="botStore.activeBot.stakeCurrency"
@@ -244,7 +246,7 @@ function refreshOHLCV(pair: string, columns: string[]) {
         :min-h="6"
         drag-allow-from=".drag-header"
       >
-        <DraggableContainer header="Chart">
+        <DraggableContainer header="图表">
           <CandleChartContainer
             :available-pairs="botStore.activeBot.whitelist"
             :historic-view="!!false"
@@ -257,4 +259,17 @@ function refreshOHLCV(pair: string, columns: string[]) {
       </GridItem>
     </template>
   </GridLayout>
+  <div
+    v-else
+    class="flex min-h-[50vh] items-center justify-center rounded-3xl border border-white/10 bg-white/6 p-8 text-center shadow-[0_24px_80px_rgba(15,23,42,0.18)] backdrop-blur-xl"
+  >
+    <div class="max-w-md space-y-3">
+      <h2 class="text-2xl font-semibold text-surface-900 dark:text-surface-0">
+        正在准备交易工作台
+      </h2>
+      <p class="text-sm leading-6 text-surface-500">
+        当前还没有可用的机器人上下文。请先选择一个机器人，或者等待连接状态恢复。
+      </p>
+    </div>
+  </div>
 </template>

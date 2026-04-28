@@ -16,7 +16,7 @@ const tableItems = computed<ComparisonTableItems[]>(() => {
   const val: ComparisonTableItems[] = [];
   const summary: ComparisonTableItems = {
     botId: undefined,
-    botName: 'Summary',
+    botName: '汇总',
     profitClosed: 0,
     profitClosedRatio: undefined,
     profitOpen: 0,
@@ -51,9 +51,7 @@ const tableItems = computed<ComparisonTableItems[]>(() => {
       //   `${thisBotStore.botName} - ${botStore.availableBots[k].botName}` || thisBotStore.botId,
 
       botName: thisBotStore.uiBotName || thisBotStore.botId,
-      trades: `${botStore.allOpenTradeCount[k]} / ${
-        botStore.allBotState[k]?.max_open_trades || 'N/A'
-      }`,
+      trades: `${botStore.allOpenTradeCount[k]} / ${botStore.allBotState[k]?.max_open_trades || '暂无'}`,
       profitClosed: v?.profit_closed_coin ?? 0,
       profitClosedRatio: v?.profit_closed_ratio || 0,
       stakeCurrency: botStore.allBotState[k]?.stake_currency || '',
@@ -65,7 +63,7 @@ const tableItems = computed<ComparisonTableItems[]>(() => {
       stakeCurrencyDecimals: botStore.allBotState[k]?.stake_currency_decimals || 3,
       isDryRun: botStore.allBotState[k]?.dry_run,
       isOnline: botStore.botStores[k]?.isBotOnline,
-      balanceAppendix: botStore.allBotState[k]?.dry_run ? '(dry)' : '',
+      balanceAppendix: botStore.allBotState[k]?.dry_run ? '（模拟）' : '',
     });
     if (v?.profit_closed_coin !== undefined) {
       if (thisBotStore.isSelected) {
@@ -79,9 +77,9 @@ const tableItems = computed<ComparisonTableItems[]>(() => {
             botStore.allBalance[k]?.total_bot ?? botStore.allBalance[k]?.total ?? 0;
           summary.stakeCurrencyDecimals = botStore.allBotState[k]?.stake_currency_decimals || 3;
           if (botStore.allSelectedBotsSameState) {
-            summary.balanceAppendix = botStore.allBotState[k]?.dry_run ? '(dry)' : '(live)';
+            summary.balanceAppendix = botStore.allBotState[k]?.dry_run ? '（模拟）' : '（实盘）';
           } else {
-            summary.balanceAppendix = '(mixed dry and live)';
+            summary.balanceAppendix = '（模拟与实盘混合）';
           }
         }
         // summary.decimals = this.allBotState[k]?.stake_currency_decimals || summary.decimals;
@@ -101,13 +99,13 @@ const tableItems = computed<ComparisonTableItems[]>(() => {
     <Column field="botName">
       <template #header>
         <div class="flex justify-between flex-row w-full">
-          <b>Bot Name</b
+          <b>机器人名称</b
           ><Badge
             class="items-center text-slate-200 bg-slate-800 cursor-pointer"
             severity="contrast"
-            title="Click to select all bots"
+            title="点击选择全部机器人"
             @click="botStore.toggleBotsByState('all')"
-            >All</Badge
+            >全部</Badge
           >
         </div>
       </template>
@@ -119,13 +117,13 @@ const tableItems = computed<ComparisonTableItems[]>(() => {
               v-model="
                 botStore.botStores[(data as unknown as ComparisonTableItems).botId!]!.isSelected
               "
-              title="Show this bot in Dashboard"
+              title="在总览中显示这个机器人"
               >{{ data[field as string] }}</BaseCheckbox
             >
             <BaseCheckbox
               v-if="!data.botId && botStore.botCount > 1"
               v-model="allToggled"
-              title="Toggle all bots"
+              title="切换全部机器人"
               class="font-bold"
               >{{ data[field as string] }}</BaseCheckbox
             >
@@ -135,49 +133,49 @@ const tableItems = computed<ComparisonTableItems[]>(() => {
             v-if="data.isOnline && data.isDryRun"
             class="items-center bg-green-800 text-slate-200 cursor-pointer"
             severity="success"
-            title="Click to select all dry run bots"
+            title="点击选择全部模拟机器人"
             @click="botStore.toggleBotsByState('dry')"
-            >Dry</Badge
+            >模拟</Badge
           >
           <Badge
             v-if="data.isOnline && !data.isDryRun"
             class="items-center cursor-pointer"
             severity="warning"
-            title="Click to select all live bots"
+            title="点击选择全部实盘机器人"
             @click="botStore.toggleBotsByState('live')"
-            >Live</Badge
+            >实盘</Badge
           >
           <Badge v-if="data.isOnline === false" class="items-center" severity="secondary"
-            >Offline</Badge
+            >离线</Badge
           >
         </div>
       </template>
     </Column>
-    <Column field="trades" header="Trades"> </Column>
-    <Column header="Open Profit">
+    <Column field="trades" header="持仓数"> </Column>
+    <Column header="浮动收益">
       <template #body="{ data }">
         <ProfitPill
-          v-if="data.profitOpen && data.botId !== 'Summary'"
+          v-if="data.profitOpen && data.botId !== '汇总'"
           :profit-ratio="(data as unknown as ComparisonTableItems).profitOpenRatio"
           :profit-abs="(data as unknown as ComparisonTableItems).profitOpen"
-          :profit-desc="`Total Profit (Open and realized) ${formatPercent(
+          :profit-desc="`当前总收益（含浮盈与已实现）${formatPercent(
             (data as ComparisonTableItems).profitOpenRatio ?? 0.0,
           )}`"
           :stake-currency="(data as ComparisonTableItems).stakeCurrency"
         />
       </template>
     </Column>
-    <Column header="Closed Profit">
+    <Column header="已实现收益">
       <template #body="{ data }">
         <ProfitPill
-          v-if="data.profitClosed && data.botId !== 'Summary'"
+          v-if="data.profitClosed && data.botId !== '汇总'"
           :profit-ratio="(data as ComparisonTableItems).profitClosedRatio"
           :profit-abs="(data as ComparisonTableItems).profitClosed"
           :stake-currency="(data as unknown as ComparisonTableItems).stakeCurrency"
         />
       </template>
     </Column>
-    <Column field="balance" header="Balance">
+    <Column field="balance" header="资产">
       <template #body="{ data }">
         <div v-if="data.balance">
           <span :title="(data as ComparisonTableItems).stakeCurrency"
@@ -192,7 +190,7 @@ const tableItems = computed<ComparisonTableItems[]>(() => {
         </div>
       </template>
     </Column>
-    <Column field="winVsLoss" header="W/L">
+    <Column field="winVsLoss" header="胜/负">
       <template #body="{ data }">
         <div v-if="data.losses !== undefined">
           <span class="text-profit">{{ data.wins }}</span> /

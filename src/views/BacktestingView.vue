@@ -107,9 +107,9 @@ watch(
       <!-- End Left bar -->
     </div>
     <div class="flex flex-col w-full">
-      <h2 class="ms-5 text-3xl font-bold">Backtesting</h2>
+      <h2 class="ms-5 text-3xl font-bold">回测中心</h2>
       <p v-if="!botStore.activeBot.canRunBacktest">
-        Bot must be in webserver mode to enable Backtesting.
+        机器人必须运行在 Webserver 模式下，才能启用回测功能。
       </p>
       <div class="w-full">
         <Tabs v-model:value="btFormMode" lazy>
@@ -119,33 +119,33 @@ watch(
               class="flex items-center"
               value="historicResults"
               :disabled="!botStore.activeBot.canRunBacktest"
-              ><i-mdi-cloud-download class="me-2" />Load Results</Tab
+              ><i-mdi-cloud-download class="me-2" />加载结果</Tab
             >
             <Tab
               class="flex items-center"
               value="run"
               :disabled="!botStore.activeBot.canRunBacktest"
-              ><i-mdi-run-fast class="me-2" />Run backtest</Tab
+              ><i-mdi-run-fast class="me-2" />运行回测</Tab
             >
             <Tab
               id="bt-analyze-btn"
               class="flex items-center"
               value="results"
               :disabled="!hasBacktestResult"
-              ><i-mdi-table-eye class="me-2" />Analyze result</Tab
+              ><i-mdi-table-eye class="me-2" />结果分析</Tab
             >
             <Tab
               v-if="hasMultiBacktestResult"
               class="flex items-center"
               value="compare-results"
               :disabled="!hasMultiBacktestResult"
-              ><i-mdi-compare-horizontal class="me-2" />Compare results</Tab
+              ><i-mdi-compare-horizontal class="me-2" />结果对比</Tab
             >
             <Tab class="flex items-center" value="visualize-summary" :disabled="!hasBacktestResult"
-              ><i-mdi-chart-bell-curve-cumulative class="me-2" />Visualize summary</Tab
+              ><i-mdi-chart-bell-curve-cumulative class="me-2" />摘要可视化</Tab
             >
             <Tab class="flex items-center" value="visualize" :disabled="!hasBacktestResult"
-              ><i-mdi-chart-timeline-variant-shimmer class="me-2" />Visualize result</Tab
+              ><i-mdi-chart-timeline-variant-shimmer class="me-2" />结果可视化</Tab
             >
           </TabList>
           <TabPanels>
@@ -190,7 +190,7 @@ watch(
         </Tabs>
 
         <small v-show="botStore.activeBot.backtestRunning" class="text-end bt-running-label"
-          >Backtest running: {{ botStore.activeBot.backtestStep }}
+          >回测运行中：{{ botStore.activeBot.backtestStep }}
           {{ formatPercent(botStore.activeBot.backtestProgress, 2) }}</small
         >
       </div>

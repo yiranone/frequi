@@ -8,7 +8,7 @@ const showRef = ref<boolean>(false);
 const title = ref<string>('');
 const message = ref<string>('');
 const accept = ref<() => void>(() => {
-  console.warn('Accepted not set.');
+  console.warn('确认回调未设置。');
 });
 
 const msgBoxOK = () => {
@@ -32,12 +32,12 @@ defineExpose({ show });
     <template #footer>
       <Button
         class="min-w-30"
-        label="Cancel"
+        label="取消"
         variant="outlined"
         severity="secondary"
         @click="showRef = false"
       />
-      <Button class="min-w-30" label="Ok" severity="primary" autofocus @click="msgBoxOK" />
+      <Button class="min-w-30" label="确认" severity="primary" autofocus @click="msgBoxOK" />
     </template>
   </Dialog>
 </template>

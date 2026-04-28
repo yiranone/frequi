@@ -7,12 +7,12 @@ const configNames = computed(() =>
 );
 </script>
 <template>
-  <Panel toggleable header="Blacklist" collapsed>
+  <Panel toggleable header="黑名单" collapsed>
     <div class="flex mb-4 items-center gap-2">
-      <span class="col-auto">Copy from:</span>
+      <span class="col-auto">复制自：</span>
       <Select v-model="copyFromConfig" size="small" class="grow" :options="configNames" />
       <Button
-        title="Copy"
+        title="复制"
         size="small"
         severity="secondary"
         @click="pairlistStore.duplicateBlacklist(copyFromConfig)"
@@ -32,6 +32,6 @@ const configNames = computed(() =>
         </Button>
       </InputGroupAddon>
     </InputGroup>
-    <Button size="small" @click="pairlistStore.addToBlacklist()">Add</Button>
+    <Button size="small" @click="pairlistStore.addToBlacklist()">新增</Button>
   </Panel>
 </template>

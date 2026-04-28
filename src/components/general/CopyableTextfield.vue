@@ -20,7 +20,7 @@ const { copy, isSupported, copied } = useClipboard();
       class="absolute right-2 top-2 opacity-0 group-hover:opacity-100 transition-opacity hover:cursor-pointer flex dark:bg-surface-700 bg-surface-200 p-1 rounded-sm items-center justify-center flex-row"
       @click="copy(typeof content === 'string' ? content : JSON.stringify(content))"
     >
-      <span v-if="copied" class="text-sm">Copied!</span>
+      <span v-if="copied" class="text-sm">已复制</span>
       <i-mdi-check-circle v-if="isSupported && copied" />
       <i-mdi-content-copy v-if="!copied && isSupported && isValid" />
     </div>

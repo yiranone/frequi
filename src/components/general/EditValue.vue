@@ -82,7 +82,7 @@ function saveNewName() {
         <Button
           size="small"
           severity="secondary"
-          :title="`Edit this ${editableName}.`"
+          :title="`编辑${editableName}`"
           @click="mode = EditState.Editing"
         >
           <template #icon>
@@ -93,7 +93,7 @@ function saveNewName() {
           v-if="allowDuplicate"
           size="small"
           severity="secondary"
-          :title="`Duplicate ${editableName}.`"
+          :title="`复制${editableName}`"
           @click="duplicate"
         >
           <template #icon>
@@ -103,7 +103,7 @@ function saveNewName() {
         <Button
           size="small"
           severity="secondary"
-          :title="`Delete this ${editableName}.`"
+          :title="`删除${editableName}`"
           @click="$emit('delete', modelValue)"
         >
           <template #icon>
@@ -114,7 +114,7 @@ function saveNewName() {
       <Button
         v-if="allowAdd && mode === EditState.None"
         size="small"
-        :title="`Add new ${editableName}.`"
+        :title="`新增${editableName}`"
         severity="primary"
         @click="addNewClick"
       >
@@ -125,7 +125,7 @@ function saveNewName() {
       <template v-if="mode !== EditState.None">
         <Button
           size="small"
-          :title="`Add new ${editableName}`"
+          :title="mode === EditState.Editing ? `保存${editableName}` : `确认${editableName}`"
           severity="primary"
           @click="saveNewName"
         >
@@ -133,7 +133,7 @@ function saveNewName() {
             <i-mdi-check />
           </template>
         </Button>
-        <Button size="small" title="Abort" severity="secondary" @click="abort">
+        <Button size="small" title="取消" severity="secondary" @click="abort">
           <template #icon>
             <i-mdi-close />
           </template>

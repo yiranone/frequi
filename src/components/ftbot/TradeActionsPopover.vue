@@ -58,7 +58,7 @@ const popover = ref<InstanceType<typeof Popover> | null>(null);
       class="btn-xs"
       size="small"
       severity="secondary"
-      title="Actions"
+      title="操作"
       @click="popover?.toggle"
     >
       <i-mdi-gesture-tap />
@@ -66,7 +66,7 @@ const popover = ref<InstanceType<typeof Popover> | null>(null);
     <Popover
       ref="popover"
       :target="`btn-actions-${id}`"
-      :title="`Actions for ${trade.pair}`"
+      :title="`${trade.pair} 的操作`"
       triggers="manual"
       placement="left"
     >
@@ -85,7 +85,7 @@ const popover = ref<InstanceType<typeof Popover> | null>(null);
         class="mt-1 w-full text-start"
         size="small"
         severity="secondary"
-        label="Close Actions menu"
+        label="关闭操作菜单"
         @click="popover?.hide"
       >
         <template #icon><i-mdi-cancel class="me-1" /></template>

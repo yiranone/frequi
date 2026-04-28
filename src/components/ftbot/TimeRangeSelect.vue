@@ -69,7 +69,7 @@ onMounted(() => {
   <div>
     <div class="flex justify-content-center">
       <div>
-        <label for="dateFrom">Start Date</label>
+        <label for="dateFrom">开始日期</label>
         <VueDatePicker
           id="dateFrom"
           v-model="dateFrom"
@@ -84,7 +84,7 @@ onMounted(() => {
         ></VueDatePicker>
       </div>
       <div class="ms-2">
-        <label for="dateTo">End Date</label>
+        <label for="dateTo">结束日期</label>
         <VueDatePicker
           v-model="dateTo"
           :dark="settingsStore.isDarkTheme"
@@ -100,7 +100,7 @@ onMounted(() => {
     </div>
 
     <label class="mt-1 text-start">
-      Timerange: <b>{{ timeRange }}</b>
+      时间范围：<b>{{ timeRange }}</b>
     </label>
   </div>
 </template>

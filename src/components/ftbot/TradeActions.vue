@@ -28,8 +28,8 @@ defineEmits<{
       class="justify-start!"
       size="small"
       severity="secondary"
-      title="Forceexit"
-      label="Forceexit"
+      title="强制平仓"
+      label="强制平仓"
       @click="$emit('forceExit', trade)"
     >
       <template #icon>
@@ -41,8 +41,8 @@ defineEmits<{
       size="small"
       class="justify-start!"
       severity="secondary"
-      title="Forceexit limit"
-      label="Forceexit limit"
+      title="限价强平"
+      label="限价强平"
       @click="$emit('forceExit', trade, 'limit')"
     >
       <template #icon>
@@ -54,8 +54,8 @@ defineEmits<{
       class="justify-start!"
       size="small"
       severity="secondary"
-      title="Forceexit market"
-      label="Forceexit market"
+      title="市价强平"
+      label="市价强平"
       @click="$emit('forceExit', trade, 'market')"
     >
       <template #icon>
@@ -67,8 +67,8 @@ defineEmits<{
       class="justify-start!"
       size="small"
       severity="secondary"
-      title="Forceexit partial"
-      label="Forceexit partial"
+      title="部分平仓"
+      label="部分平仓"
       @click="$emit('forceExitPartial', trade)"
     >
       <template #icon>
@@ -80,8 +80,8 @@ defineEmits<{
       class="justify-start!"
       size="small"
       severity="secondary"
-      title="Cancel open orders"
-      label="Cancel open orders"
+      title="取消挂单"
+      label="取消挂单"
       @click="$emit('cancelOpenOrder', trade)"
     >
       <template #icon>
@@ -93,8 +93,8 @@ defineEmits<{
       class="justify-start!"
       size="small"
       severity="secondary"
-      title="Increase position"
-      label="Increase position"
+      title="增加仓位"
+      label="增加仓位"
       @click="$emit('forceEntry', trade)"
     >
       <template #icon>
@@ -106,8 +106,8 @@ defineEmits<{
       class="justify-start!"
       size="small"
       severity="secondary"
-      title="Reload"
-      label="Reload"
+      title="重新载入"
+      label="重新载入"
       @click="$emit('reloadTrade', trade)"
     >
       <template #icon><i-mdi-reload-alert /> </template>
@@ -116,8 +116,8 @@ defineEmits<{
       class="justify-start!"
       size="small"
       severity="secondary"
-      title="Delete trade"
-      label="Delete trade"
+      title="删除交易"
+      label="删除交易"
       @click="$emit('deleteTrade', trade)"
     >
       <template #icon>

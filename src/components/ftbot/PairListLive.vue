@@ -58,51 +58,86 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <div>
-      <h3 class="text-xl">Whitelist Methods</h3>
+  <div class="space-y-5">
+    <section
+      class="rounded-3xl border border-white/10 bg-white/6 p-4 shadow-[0_24px_80px_rgba(15,23,42,0.18)] backdrop-blur-xl"
+    >
+      <div class="mb-3 flex items-center justify-between">
+        <h3 class="text-lg font-semibold text-surface-900 dark:text-surface-0">白名单生成方式</h3>
+        <span
+          class="rounded-full border border-cyan-400/25 bg-cyan-500/10 px-3 py-1 text-xs font-medium text-cyan-700 dark:text-cyan-200"
+        >
+          {{ botStore.activeBot.pairlistMethods.length }} 项
+        </span>
+      </div>
 
       <ul v-if="botStore.activeBot.pairlistMethods.length" class="list wide">
         <li
           v-for="(method, key) in botStore.activeBot.pairlistMethods"
           :key="key"
-          class="pair bg-white text-black align-middle border border-secondary"
+          class="pair text-surface-900 dark:text-surface-0"
         >
           {{ method }}
         </li>
       </ul>
-    </div>
-    <!-- Show Whitelist -->
-    <h3 class="text-lg font-bold" :title="`${botStore.activeBot.whitelist.length} pairs`">
-      Whitelist
-    </h3>
-    <ul v-if="botStore.activeBot.whitelist.length" class="list">
-      <li
-        v-for="(pair, key) in botStore.activeBot.whitelist"
-        :key="key"
-        class="pair bg-white text-black align-middle border border-secondary"
-      >
-        {{ pair }}
-      </li>
-    </ul>
-    <p v-else>List Unavailable. Please Login and make sure server is running.</p>
-    <Divider />
+      <p v-else class="text-sm text-surface-500">
+        当前没有可用的白名单生成方式，请确认机器人已经返回交易对配置。
+      </p>
+    </section>
 
-    <!-- Blacklsit -->
-    <div>
-      <div class="flex flex-row justify-center mb-1">
-        <label
-          class="text-lg font-bold mb-2 w-full"
-          title="Blacklist - Select (followed by a click on '-') to remove pairs"
+    <section
+      class="rounded-3xl border border-white/10 bg-white/6 p-4 shadow-[0_24px_80px_rgba(15,23,42,0.18)] backdrop-blur-xl"
+    >
+      <div class="mb-3 flex items-center justify-between">
+        <h3
+          class="text-lg font-semibold text-surface-900 dark:text-surface-0"
+          :title="`共 ${botStore.activeBot.whitelist.length} 个交易对`"
         >
-          Blacklist
-        </label>
-        <div class="flex flex-cols items-center gap-1 pe-1">
+          白名单
+        </h3>
+        <span
+          class="rounded-full border border-emerald-400/25 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-700 dark:text-emerald-200"
+        >
+          {{ botStore.activeBot.whitelist.length }} 个
+        </span>
+      </div>
+
+      <ul v-if="botStore.activeBot.whitelist.length" class="list">
+        <li
+          v-for="(pair, key) in botStore.activeBot.whitelist"
+          :key="key"
+          class="pair text-surface-900 dark:text-surface-0"
+        >
+          {{ pair }}
+        </li>
+      </ul>
+      <p v-else class="text-sm text-surface-500">
+        当前无法获取白名单，请确认已经登录且机器人服务正在运行。
+      </p>
+    </section>
+
+    <section
+      class="rounded-3xl border border-white/10 bg-white/6 p-4 shadow-[0_24px_80px_rgba(15,23,42,0.18)] backdrop-blur-xl"
+    >
+      <div class="mb-3 flex items-center gap-3">
+        <div class="min-w-0 grow">
+          <label
+            class="block text-lg font-semibold text-surface-900 dark:text-surface-0"
+            title="先选中要移除的交易对，再点击删除按钮。"
+          >
+            黑名单
+          </label>
+          <p class="mt-1 text-sm text-surface-500">
+            手动维护不允许参与交易的交易对，适合快速排除异常市场。
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
           <Button
             ref="blacklist-add-btn"
             severity="secondary"
-            :class="botStore.activeBot.botFeatures.botBlacklistModify ? 'col-6' : ''"
-            size="small"
+            rounded
+            variant="outlined"
+            title="添加交易对到黑名单"
             @click="showPopover"
           >
             <template #icon>
@@ -111,9 +146,10 @@ onMounted(() => {
           </Button>
           <Button
             v-if="botStore.activeBot.botFeatures.botBlacklistModify"
-            size="small"
+            rounded
             severity="secondary"
-            title="Select pairs to delete pairs from your blacklist."
+            variant="outlined"
+            title="删除已选中的黑名单交易对"
             :disabled="blacklistSelect.length === 0"
             @click="deletePairs"
           >
@@ -123,40 +159,52 @@ onMounted(() => {
           </Button>
         </div>
       </div>
+
       <Popover ref="blacklistAddPopover" class="p-1">
         <form ref="form" @submit.prevent="addBlacklistPair">
-          <div class="space-y-1">
-            <h4 class="font-bold mb-2">Add Pair to Blacklist</h4>
-            <div class="space-x-2">
-              <label for="pair-input">Pair</label>
+          <div class="space-y-3">
+            <div>
+              <h4 class="font-semibold text-surface-900 dark:text-surface-0">添加黑名单交易对</h4>
+              <p class="mt-1 text-sm text-surface-500">
+                输入形如 <code>BTC/USDT</code> 的交易对名称。
+              </p>
+            </div>
+            <div class="space-y-2">
+              <label
+                for="pair-input"
+                class="text-sm font-medium text-surface-700 dark:text-surface-200"
+              >
+                交易对
+              </label>
               <InputText id="pair-input" v-model="newblacklistpair" required autofocus></InputText>
             </div>
             <Button
               id="blacklist-submit"
               class="float-end mb-2"
-              size="small"
               severity="primary"
               type="submit"
-            >
-              Add
-            </Button>
+              label="添加"
+            />
           </div>
         </form>
       </Popover>
-    </div>
-    <ul v-if="botStore.activeBot.blacklist.length" class="list">
-      <li
-        v-for="(pair, key) in botStore.activeBot.blacklist"
-        :key="key"
-        class="pair bg-black text-white text-ellipsis overflow-hidden"
-        :title="pair"
-        :class="blacklistSelect.indexOf(key) > -1 ? 'active' : ''"
-        @click="blacklistSelectClick(key)"
-      >
-        <span class="check"><i-mdi-check-circle /></span>{{ pair }}
-      </li>
-    </ul>
-    <p v-else>BlackList Unavailable. Please Login and make sure server is running.</p>
+
+      <ul v-if="botStore.activeBot.blacklist.length" class="list">
+        <li
+          v-for="(pair, key) in botStore.activeBot.blacklist"
+          :key="key"
+          class="pair bg-slate-950/70 text-white text-ellipsis overflow-hidden"
+          :title="pair"
+          :class="blacklistSelect.indexOf(key) > -1 ? 'active' : ''"
+          @click="blacklistSelectClick(key)"
+        >
+          <span class="check"><i-mdi-check-circle /></span>{{ pair }}
+        </li>
+      </ul>
+      <p v-else class="text-sm text-surface-500">
+        当前无法获取黑名单，请确认已经登录且机器人服务正在运行。
+      </p>
+    </section>
   </div>
 </template>
 
@@ -192,6 +240,6 @@ onMounted(() => {
 }
 
 .pair {
-  @apply p-2 border rounded cursor-pointer relative border-surface-500;
+  @apply relative cursor-pointer rounded-2xl border border-white/10 bg-white/8 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-200 hover:border-cyan-400/40 hover:bg-cyan-500/8;
 }
 </style>

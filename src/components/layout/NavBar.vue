@@ -13,6 +13,7 @@ const router = useRouter();
 const favicon = ref<Favico | undefined>(undefined);
 const pingInterval = ref<number>();
 const drawerVisible = ref(false);
+const brandName = '寻链量化';
 
 async function clickLogout() {
   botStore.removeBot(botStore.selectedBot);
@@ -45,7 +46,7 @@ const resetDynamicLayout = (): void => {
 };
 
 const setTitle = () => {
-  let title = 'freqUI';
+  let title = brandName;
   if (settingsStore.openTradesInTitle === OpenTradeVizOptions.asTitle) {
     title = `(${botStore.activeBotorUndefined?.openTradeCount}) ${title}`;
   }
@@ -63,6 +64,7 @@ onBeforeUnmount(() => {
 
 onMounted(async () => {
   await settingsStore.loadUIVersion();
+  setTitle();
   pingInterval.value = window.setInterval(botStore.pingAll, 60000);
 });
 
@@ -92,47 +94,49 @@ watch(
 
 const navItems = ref([
   {
-    label: 'Trade',
+    label: '交易台',
     to: '/trade',
     visible: computed(() => !botStore.canRunBacktest),
   },
   {
-    label: 'Dashboard',
+    label: '总览',
     to: '/dashboard',
     visible: computed(() => !botStore.canRunBacktest),
   },
   {
-    label: 'Chart',
+    label: '图表',
     to: '/graph',
   },
   {
-    label: 'Logs',
+    label: '日志',
     to: '/logs',
   },
   {
-    label: 'Settings',
+    label: '设置',
     to: '/settings',
     mobileOnly: true,
   },
   {
-    label: 'Backtest',
+    label: '回测',
     to: '/backtest',
     visible: computed(() => botStore.canRunBacktest),
   },
   {
-    label: 'Download Data',
+    label: '下载数据',
     to: '/download_data',
     visible: computed(
-      () => botStore.isWebserverMode && botStore.activeBot.botFeatures.downloadDataView,
+      () =>
+        botStore.isWebserverMode &&
+        (botStore.activeBotorUndefined?.botFeatures.downloadDataView ?? false),
     ),
   },
   {
-    label: 'Pairlist Config',
+    label: '交易对白名单配置',
     to: '/pairlist_config',
     visible: computed(
       () =>
-        (botStore.activeBot?.isWebserverMode ?? false) &&
-        botStore.activeBot.botFeatures.pairlistConfig,
+        (botStore.activeBotorUndefined?.isWebserverMode ?? false) &&
+        (botStore.activeBotorUndefined?.botFeatures.pairlistConfig ?? false),
     ),
   },
 ]);
@@ -149,26 +153,26 @@ const activeBotName = computed(() => {
   if (botStore.activeBotorUndefined?.botName) {
     return botStore.activeBotorUndefined.botName;
   }
-  return botStore.selectedBotObj?.botName || 'No bot selected';
+  return botStore.selectedBotObj?.botName || '未选择机器人';
 });
 
 const activeBotStatus = computed(() => {
   if (!botStore.hasBots) {
     return {
-      label: 'Awaiting bot',
+      label: '等待连接',
       dotClass: 'bg-slate-400',
       textClass: 'text-slate-500 dark:text-slate-400',
     };
   }
   if (botStore.activeBotorUndefined?.isBotOnline) {
     return {
-      label: 'Connected',
+      label: '在线',
       dotClass: 'bg-emerald-400',
       textClass: 'text-emerald-600 dark:text-emerald-300',
     };
   }
   return {
-    label: 'Offline',
+    label: '离线',
     dotClass: 'bg-rose-400',
     textClass: 'text-rose-600 dark:text-rose-300',
   };
@@ -176,16 +180,16 @@ const activeBotStatus = computed(() => {
 
 const menuItems = computed<MenuItem[]>(() => [
   {
-    label: `V: ${settingsStore.uiVersion}`,
+    label: `版本：${settingsStore.uiVersion}`,
     disabled: true,
   },
   {
-    label: 'Settings',
+    label: '设置',
     icon: 'i-mdi-cog',
     command: () => router.push('/settings'),
   },
   {
-    label: 'Lock dynamic Layout',
+    label: '锁定动态布局',
     checkbox: true,
     checked: layoutStore.layoutLocked,
     command: () => {
@@ -193,12 +197,12 @@ const menuItems = computed<MenuItem[]>(() => [
     },
   },
   {
-    label: 'Reset Layout',
+    label: '重置布局',
     icon: 'i-mdi-lock-reset',
     command: resetDynamicLayout,
   },
   {
-    label: 'Logout',
+    label: '退出连接',
     icon: 'i-mdi-logout',
     command: clickLogout,
     visible: botStore.hasBots && botStore.botCount === 1,
@@ -240,12 +244,12 @@ function mobileLinkClass(to: string) {
           <img
             class="h-6 w-6 object-contain dark:invert"
             src="@/assets/freqtrade-logo.png"
-            alt="Freqtrade UI logo"
+            alt="寻链量化标志"
           />
         </div>
         <div class="hidden sm:block">
-          <div class="ft-heading text-base font-semibold">Freqtrade UI</div>
-          <div class="ft-muted text-xs">Live control, analytics, backtesting</div>
+          <div class="ft-heading text-base font-semibold">{{ brandName }}</div>
+          <div class="ft-muted text-xs">实时监控、分析研判、回测执行</div>
         </div>
       </RouterLink>
 
@@ -266,9 +270,9 @@ function mobileLinkClass(to: string) {
           <div
             v-if="!settingsStore.confirmDialog"
             class="rounded-full border border-amber-400/25 bg-amber-100/70 px-3 py-2 text-xs font-medium text-amber-700 dark:bg-amber-500/10 dark:text-amber-200"
-            title="Confirm dialog deactivated, forced exits will be executed immediately."
+            title="确认弹窗已关闭，强制平仓会直接执行。"
           >
-            Fast actions enabled
+            快速操作已启用
           </div>
 
           <ThemeSelect />
@@ -306,9 +310,9 @@ function mobileLinkClass(to: string) {
             </template>
           </Select>
 
-          <ReloadControl class="me-1" title="Confirm Dialog deactivated." />
+          <ReloadControl class="me-1" title="确认弹窗已关闭。" />
 
-          <div v-if="botStore.hasBots" class="flex items-center">
+          <div v-if="botStore.hasBots && botStore.activeBotorUndefined" class="flex items-center">
             <Button
               severity="secondary"
               variant="outlined"
@@ -321,7 +325,7 @@ function mobileLinkClass(to: string) {
                   shape="circle"
                   class="bg-slate-950 text-white dark:bg-white dark:text-slate-950"
                 >
-                  FT
+                  XL
                 </Avatar>
                 <i-mdi-chevron-down />
               </div>
@@ -344,7 +348,7 @@ function mobileLinkClass(to: string) {
             </Menu>
           </div>
 
-          <LoginModal v-else-if="route?.path !== '/login'" login-text="Connect bot" />
+          <LoginModal v-else-if="route?.path !== '/login'" login-text="连接机器人" />
         </div>
       </div>
 
@@ -371,8 +375,8 @@ function mobileLinkClass(to: string) {
         <div class="ft-panel-card flex h-full flex-col rounded-l-[32px] px-5 py-4">
           <div class="mb-6 flex items-start justify-between gap-4">
             <div>
-              <div class="ft-heading text-xl font-semibold">Command center</div>
-              <div class="ft-muted mt-1 text-sm">Switch routes, theme and bot context.</div>
+              <div class="ft-heading text-xl font-semibold">控制中心</div>
+              <div class="ft-muted mt-1 text-sm">切换页面、主题和当前机器人上下文。</div>
             </div>
             <Button
               class="rounded-full border border-white/10 bg-white/40 dark:bg-slate-950/25"
@@ -436,7 +440,11 @@ function mobileLinkClass(to: string) {
               </template>
             </Select>
 
-            <ReloadControl class="justify-center w-full" title="Confirm Dialog deactivated." />
+            <ReloadControl
+              v-if="botStore.activeBotorUndefined"
+              class="justify-center w-full"
+              title="确认弹窗已关闭。"
+            />
 
             <div class="grid grid-cols-2 gap-2">
               <Button
@@ -448,7 +456,7 @@ function mobileLinkClass(to: string) {
                   router.push('/settings');
                 "
               >
-                Settings
+                设置
               </Button>
               <Button
                 severity="secondary"
@@ -456,24 +464,24 @@ function mobileLinkClass(to: string) {
                 class="rounded-2xl"
                 @click="resetDynamicLayout"
               >
-                Reset layout
+                重置布局
               </Button>
             </div>
 
             <Button
-              v-if="botStore.hasBots && botStore.botCount === 1"
+              v-if="botStore.hasBots && botStore.botCount === 1 && botStore.activeBotorUndefined"
               severity="secondary"
               class="w-full rounded-2xl"
               @click="clickLogout"
             >
-              Logout
+              退出连接
             </Button>
 
             <div v-else-if="route?.path !== '/login'" class="flex justify-center">
-              <LoginModal login-text="Connect bot" />
+              <LoginModal login-text="连接机器人" />
             </div>
 
-            <div class="ft-muted text-center text-xs">Version {{ settingsStore.uiVersion }}</div>
+            <div class="ft-muted text-center text-xs">版本 {{ settingsStore.uiVersion }}</div>
           </div>
         </div>
       </template>

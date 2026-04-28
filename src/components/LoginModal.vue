@@ -6,7 +6,7 @@ withDefaults(
     loginText?: string;
   }>(),
   {
-    loginText: 'Login',
+    loginText: '连接机器人',
   },
 );
 const loginViewOpen = ref(false);
@@ -36,7 +36,7 @@ defineExpose({
     <Dialog
       id="modal-prevent-closing"
       v-model:visible="loginViewOpen"
-      header="Login to your bot"
+      header="连接到机器人"
       :dismissable-mask="true"
     >
       <BotLogin

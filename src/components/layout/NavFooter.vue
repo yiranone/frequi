@@ -13,7 +13,7 @@ const botStore = useBotStore();
         as="router-link"
         class="align-items-center min-w-0 flex-1 rounded-2xl text-current"
         to="/open_trades"
-        label="Trades"
+        label="持仓"
       >
         <template #icon>
           <i-mdi-folder-open height="24" width="24" />
@@ -27,7 +27,7 @@ const botStore = useBotStore();
         as="router-link"
         class="align-items-center min-w-0 flex-1 rounded-2xl text-current"
         to="/trade_history"
-        label="History"
+        label="历史"
       >
         <template #icon>
           <i-mdi-folder-lock height="24" width="24" />
@@ -41,7 +41,7 @@ const botStore = useBotStore();
         as="router-link"
         class="align-items-center min-w-0 flex-1 rounded-2xl text-current"
         to="/pairlist"
-        label="Pairlist"
+        label="交易对"
       >
         <template #icon>
           <i-mdi-view-list height="24" width="24" />
@@ -55,7 +55,7 @@ const botStore = useBotStore();
         as="router-link"
         class="align-items-center min-w-0 flex-1 rounded-2xl text-current"
         to="/balance"
-        label="Balance"
+        label="资产"
       >
         <template #icon>
           <i-mdi-bank height="24" width="24" />
@@ -69,7 +69,7 @@ const botStore = useBotStore();
         as="router-link"
         class="align-items-center min-w-0 flex-1 rounded-2xl text-current"
         to="/dashboard"
-        label="Dashboard"
+        label="总览"
       >
         <template #icon>
           <i-mdi-view-dashboard-outline height="24" width="24" />

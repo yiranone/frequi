@@ -13,12 +13,12 @@ const props = withDefaults(
     stakeCurrencyDecimals?: number;
   }>(),
   {
-    title: 'Trades',
+    title: '交易',
     stakeCurrency: '',
     activeTrades: false,
     showFilter: false,
     multiBotView: false,
-    emptyText: 'No Trades to show.',
+    emptyText: '暂无交易记录。',
     stakeCurrencyDecimals: 3,
   },
 );
@@ -61,13 +61,7 @@ const tradeClick = (trade) => {
         :rows="perPage"
         aria-controls="tradeList"
       ></Paginator>
-      <InputText
-        v-if="showFilter"
-        v-model="filterText"
-        type="text"
-        placeholder="Filter"
-        size="sm"
-      />
+      <InputText v-if="showFilter" v-model="filterText" type="text" placeholder="筛选" size="sm" />
     </div>
   </div>
 </template>

@@ -1,10 +1,10 @@
 const pairTemplates = ref([
   {
-    description: 'All USDT Pairs',
+    description: '全部 USDT 现货交易对',
     pairs: ['.*/USDT'],
   },
   {
-    description: 'All USDT Futures Pairs',
+    description: '全部 USDT 合约交易对',
     pairs: ['.*/USDT:USDT'],
   },
 ]);

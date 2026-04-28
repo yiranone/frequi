@@ -6,7 +6,7 @@ withDefaults(
   }>(),
   {
     allowEdit: false,
-    editableName: 'plot configuration',
+    editableName: '绘图配置',
   },
 );
 const plotStore = usePlotConfigStore();
@@ -18,7 +18,7 @@ const plotStore = usePlotConfigStore();
     :allow-edit="allowEdit"
     :allow-add="allowEdit"
     :allow-duplicate="allowEdit"
-    editable-name="plot configuration"
+    editable-name="绘图配置"
     @rename="plotStore.renamePlotConfig"
     @delete="plotStore.deletePlotConfig"
     @new="plotStore.newPlotConfig"

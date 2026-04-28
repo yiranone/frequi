@@ -21,12 +21,12 @@ const props = withDefaults(
     emptyText?: string;
   }>(),
   {
-    title: 'Trades',
+    title: '交易',
     stakeCurrency: '',
     activeTrades: false,
     showFilter: false,
     multiBotView: false,
-    emptyText: 'No Trades to show.',
+    emptyText: '暂无交易记录。',
   },
 );
 
@@ -51,41 +51,41 @@ function formatPriceWithDecimals(price: number) {
 
 const tableFields = ref([
   { field: 'trade_id', header: 'ID' },
-  { field: 'pair', header: 'Pair' },
-  { field: 'amount', header: 'Amount' },
+  { field: 'pair', header: '交易对' },
+  { field: 'amount', header: '数量' },
   props.activeTrades
-    ? { field: 'stake_amount', header: 'Stake amount' }
-    : { field: 'max_stake_amount', header: 'Total stake amount' },
+    ? { field: 'stake_amount', header: '投入金额' }
+    : { field: 'max_stake_amount', header: '总投入金额' },
   {
     field: 'open_rate',
-    header: 'Open rate',
+    header: '开仓价格',
   },
   {
     field: props.activeTrades ? 'current_rate' : 'close_rate',
-    header: props.activeTrades ? 'Current rate' : 'Close rate',
+    header: props.activeTrades ? '当前价格' : '平仓价格',
   },
   {
     field: 'profit',
-    header: props.activeTrades ? 'Current profit %' : 'Profit %',
+    header: props.activeTrades ? '当前收益率' : '收益率',
   },
-  { field: 'open_timestamp', header: 'Open date' },
+  { field: 'open_timestamp', header: '开仓时间' },
   ...(props.activeTrades
     ? [{ field: 'actions', header: '' }]
     : [
-        { field: 'close_timestamp', header: 'Close date' },
-        { field: 'exit_reason', header: 'Close Reason' },
+        { field: 'close_timestamp', header: '平仓时间' },
+        { field: 'exit_reason', header: '平仓原因' },
       ]),
 ]);
 
 if (props.multiBotView) {
-  tableFields.value.unshift({ field: 'botName', header: 'Bot' });
+  tableFields.value.unshift({ field: 'botName', header: '机器人' });
 }
 
 const feOrderType = ref<string | undefined>(undefined);
 function forceExitHandler(item: Trade, ordertype: string | undefined = undefined) {
   feTrade.value = item;
   confirmExitValue.value = ModalReasons.forceExit;
-  confirmExitText.value = `Really exit trade ${item.trade_id} (Pair ${item.pair}) using ${ordertype} Order?`;
+  confirmExitText.value = `确认以${ordertype === 'market' ? '市价' : '限价'}方式强制平仓交易 ${item.trade_id}（${item.pair}）吗？`;
   feOrderType.value = ordertype;
   if (settingsStore.confirmDialog === true) {
     removeTradeVisible.value = true;
@@ -128,7 +128,7 @@ function forceExitExecuter() {
 }
 
 function removeTradeHandler(item: Trade) {
-  confirmExitText.value = `Really delete trade ${item.trade_id} (Pair ${item.pair})?`;
+  confirmExitText.value = `确认删除交易 ${item.trade_id}（${item.pair}）吗？`;
   confirmExitValue.value = ModalReasons.removeTrade;
   feTrade.value = item;
   removeTradeVisible.value = true;
@@ -140,7 +140,7 @@ function forceExitPartialHandler(item: Trade) {
 }
 
 function cancelOpenOrderHandler(item: Trade) {
-  confirmExitText.value = `Cancel open order for trade ${item.trade_id} (Pair ${item.pair})?`;
+  confirmExitText.value = `确认取消交易 ${item.trade_id}（${item.pair}）的挂单吗？`;
   feTrade.value = item;
   confirmExitValue.value = ModalReasons.cancelOpenOrder;
   removeTradeVisible.value = true;
@@ -222,7 +222,7 @@ watch(
             {{ data.trade_id }}
             {{
               botStore.activeBot.botFeatures.futures && data.trading_mode !== 'spot'
-                ? (data.trade_id ? '| ' : '') + (data.is_short ? 'Short' : 'Long')
+                ? (data.trade_id ? '| ' : '') + (data.is_short ? '做空' : '做多')
                 : ''
             }}
           </template>
@@ -272,7 +272,12 @@ watch(
       <template v-if="showFilter" #paginatorstart> </template>
       <template v-if="showFilter" #paginatorend>
         <div class="flex justify-end gap-2 p-2">
-          <InputText v-model="filterText" placeholder="Filter" class="w-64" size="small" />
+          <InputText
+            v-model="filterText"
+            placeholder="筛选交易对、原因或标签"
+            class="w-64"
+            size="small"
+          />
         </div>
       </template>
     </DataTable>
@@ -289,11 +294,11 @@ watch(
       position-increase
     />
 
-    <Dialog v-model:visible="removeTradeVisible" :modal="true" header="Exit trade">
+    <Dialog v-model:visible="removeTradeVisible" :modal="true" header="交易确认">
       <p>{{ confirmExitText }}</p>
       <template #footer>
-        <Button label="Cancel" @click="removeTradeVisible = false" />
-        <Button label="Confirm" severity="danger" @click="forceExitExecuter" />
+        <Button label="取消" @click="removeTradeVisible = false" />
+        <Button label="确认" severity="danger" @click="forceExitExecuter" />
       </template>
     </Dialog>
   </div>
